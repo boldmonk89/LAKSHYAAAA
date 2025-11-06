@@ -3,7 +3,7 @@ import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import WhatSSBDemands from "@/components/WhatSSBDemands";
 import StudyMaterials from "@/components/StudyMaterials";
-import TATAnalyzer from "@/components/TATAnalyzer";
+import AIPsychAnalyzer from "@/components/AIPsychAnalyzer";
 import VideoResources from "@/components/VideoResources";
 import SSBBoards from "@/components/SSBBoards";
 import Telegram from "@/components/Telegram";
@@ -34,7 +34,7 @@ const Index = () => {
       <Hero />
       <WhatSSBDemands />
       <StudyMaterials />
-      <TATAnalyzer />
+      <AIPsychAnalyzer />
       <VideoResources />
       <SSBBoards />
       <Telegram />

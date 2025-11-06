@@ -18,10 +18,10 @@ All colors MUST be HSL.
     --popover: 0 0% 8%;
     --popover-foreground: 30 100% 95%;
 
-    /* Darker orange primary */
-    --primary: 18 85% 45%;
+    /* Golden-red primary for aesthetic gradient */
+    --primary: 35 95% 55%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 18 85% 55%;
+    --primary-glow: 10 90% 55%;
 
     /* Military olive secondary */
     --secondary: 82 20% 30%;
@@ -30,7 +30,7 @@ All colors MUST be HSL.
     --muted: 0 0% 15%;
     --muted-foreground: 30 20% 65%;
 
-    --accent: 18 85% 45%;
+    --accent: 35 95% 55%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -38,19 +38,19 @@ All colors MUST be HSL.
 
     --border: 0 0% 20%;
     --input: 0 0% 15%;
-    --ring: 18 85% 45%;
+    --ring: 35 95% 55%;
 
     --radius: 0.75rem;
 
-    /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(18 85% 45% / 0.1), hsl(0 0% 5%));
-    --gradient-accent: linear-gradient(135deg, hsl(18 85% 45%), hsl(16 80% 40%));
+    /* Gradients - Golden to Red */
+    --gradient-hero: linear-gradient(135deg, hsl(35 95% 55% / 0.1), hsl(0 0% 5%));
+    --gradient-accent: linear-gradient(135deg, hsl(35 95% 55%), hsl(10 90% 55%));
     --gradient-dark: linear-gradient(180deg, hsl(0 0% 5%), hsl(0 0% 8%));
 
-    /* Shadows */
-    --shadow-glow: 0 0 40px hsl(18 85% 45% / 0.3);
+    /* Shadows - Golden glow */
+    --shadow-glow: 0 0 40px hsl(35 95% 55% / 0.3);
     --shadow-card: 0 10px 30px -10px hsl(0 0% 0% / 0.5);
-    --shadow-section: 0 0 60px hsl(18 85% 45% / 0.15);
+    --shadow-section: 0 0 60px hsl(35 95% 55% / 0.15);
 
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);

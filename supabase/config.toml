@@ -1,1 +1,4 @@
 project_id = "zzhgbypdlhjjccxsobqp"
+
+[functions.analyze-psych]
+verify_jwt = false
