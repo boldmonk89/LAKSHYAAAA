@@ -1,3 +1,4 @@
+import SiteIntroOnce from "@/components/SiteIntroOnce";
 import { useState, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
@@ -16,11 +17,7 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Minimum 2 seconds loading time
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-
+    const timer = setTimeout(() => setIsLoading(false), 2000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -31,6 +28,10 @@ const Index = () => {
   return (
     <main className="min-h-screen">
       <Navigation />
+
+      {/* 🔊 Plays ~5s on each load; if autoplay is blocked, shows a tiny consent bar */}
+      <SiteIntroOnce ms={5000} tryAutoplayFirst />
+
       <Hero />
       <WhatSSBDemands />
       <StudyMaterials />
@@ -46,5 +47,6 @@ const Index = () => {
 };
 
 export default Index;
+
 
 
