@@ -6,7 +6,7 @@ import StudyMaterials from "@/components/StudyMaterials";
 import TATAnalyzer from "@/components/TATAnalyzer";
 import VideoResources from "@/components/VideoResources";
 import SSBBoards from "@/components/SSBBoards";
-import Forum from "@/components/Forum";
+import Telegram from "@/components/Telegram";
 import Motivation from "@/components/Motivation";
 import Contact from "@/components/Contact";
 import Loader from "@/components/Loader";
@@ -36,7 +36,7 @@ const Index = () => {
       <TATAnalyzer />
       <VideoResources />
       <SSBBoards />
-      <Forum />
+      <Telegram />
       <Motivation />
       <Contact />
     </main>
