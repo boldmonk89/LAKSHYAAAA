@@ -36,8 +36,8 @@ const videos = [
   {
     title: "Sample TAT Stories",
     description: "TAT story examples and analysis",
-    videoId: "dQw4w9WgXcQ",
-    thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+    videoId: "BTEM0BeT9nU",
+    thumbnail: "https://img.youtube.com/vi/BTEM0BeT9nU/maxresdefault.jpg",
     duration: "Channel"
   },
 ];
