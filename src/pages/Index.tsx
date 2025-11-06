@@ -10,6 +10,7 @@ import Telegram from "@/components/Telegram";
 import Motivation from "@/components/Motivation";
 import Contact from "@/components/Contact";
 import Loader from "@/components/Loader";
+import TelegramFAB from "@/components/TelegramFAB";
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -39,6 +40,7 @@ const Index = () => {
       <Telegram />
       <Motivation />
       <Contact />
+      <TelegramFAB />
     </main>
   );
 };
