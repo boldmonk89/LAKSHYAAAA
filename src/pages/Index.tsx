@@ -1,0 +1,46 @@
+import { useState, useEffect } from "react";
+import Navigation from "@/components/Navigation";
+import Hero from "@/components/Hero";
+import WhatSSBDemands from "@/components/WhatSSBDemands";
+import StudyMaterials from "@/components/StudyMaterials";
+import TATAnalyzer from "@/components/TATAnalyzer";
+import VideoResources from "@/components/VideoResources";
+import SSBBoards from "@/components/SSBBoards";
+import Forum from "@/components/Forum";
+import Motivation from "@/components/Motivation";
+import Contact from "@/components/Contact";
+import Loader from "@/components/Loader";
+
+const Index = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Minimum 2 seconds loading time
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <Loader onComplete={() => setIsLoading(false)} />;
+  }
+
+  return (
+    <main className="min-h-screen">
+      <Navigation />
+      <Hero />
+      <WhatSSBDemands />
+      <StudyMaterials />
+      <TATAnalyzer />
+      <VideoResources />
+      <SSBBoards />
+      <Forum />
+      <Motivation />
+      <Contact />
+    </main>
+  );
+};
+
+export default Index;
