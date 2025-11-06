@@ -39,6 +39,14 @@ const Index = () => {
       <SSBBoards />
       <Telegram />
       <Motivation />
+
+      {/* --- AUDIO PLAYER SECTION --- */}
+      <section className="flex flex-col items-center justify-center py-10 bg-gray-50">
+        <h2 className="text-2xl font-semibold mb-4">Audio Test</h2>
+        <audio controls src="/song.mp3" className="w-80 rounded-md shadow" />
+      </section>
+      {/* --- END AUDIO SECTION --- */}
+
       <Contact />
       <TelegramFAB />
     </main>
@@ -46,3 +54,4 @@ const Index = () => {
 };
 
 export default Index;
+
