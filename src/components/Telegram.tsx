@@ -34,24 +34,24 @@ const Telegram = () => {
   const { ref: rightRef, isVisible: rightVisible } = useScrollAnimation({ threshold: 0.3 });
 
   return (
-    <section id="telegram" className="relative py-24 px-4 overflow-hidden">
-      {/* Fixed Background - 90% opacity, slight blur */}
-      <div 
+    // 👇 ID changed to "communities" + scroll offset so fixed navbar content hide na ho
+    <section id="communities" className="relative py-24 px-4 overflow-hidden scroll-mt-24 md:scroll-mt-28">
+      {/* Fixed Background */}
+      <div
         className="fixed inset-0 z-0"
         style={{
           backgroundImage: `url(${backgroundImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed',
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
         }}
       />
-      
-      {/* Overlay - 90% opacity, 2% blur */}
+      {/* Overlay */}
       <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-10" />
 
       {/* Content */}
       <div className="relative z-20 max-w-7xl mx-auto">
-        <div ref={titleRef} className={`text-center mb-16 scroll-fade-up ${titleVisible ? 'visible' : ''}`}>
+        <div ref={titleRef} className={`text-center mb-16 scroll-fade-up ${titleVisible ? "visible" : ""}`}>
           <h2 className="text-4xl md:text-6xl font-bold text-gradient mb-4">
             Join SSB Various Communities for Discussion
           </h2>
@@ -62,17 +62,15 @@ const Telegram = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Left - Telegram Discussion Groups */}
-          <div ref={leftRef} className={`scroll-slide-left ${leftVisible ? 'visible' : ''}`}>
+          <div ref={leftRef} className={`scroll-slide-left ${leftVisible ? "visible" : ""}`}>
             <Card className="glass-premium p-6 card-glow h-full">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-12 rounded-full bg-[#0088cc] flex items-center justify-center">
                   {telegramIcon}
                 </div>
-                <h3 className="text-2xl font-bold text-gradient">
-                  SSB Discussion Groups
-                </h3>
+                <h3 className="text-2xl font-bold text-gradient">SSB Discussion Groups</h3>
               </div>
-              
+
               <p className="text-sm text-muted-foreground mb-6">
                 Join these communities to discuss strategies, share experiences, and practice with fellow aspirants
               </p>
@@ -96,17 +94,15 @@ const Telegram = () => {
           </div>
 
           {/* Right - YouTube Channels on Telegram */}
-          <div ref={rightRef} className={`scroll-slide-right ${rightVisible ? 'visible' : ''}`}>
+          <div ref={rightRef} className={`scroll-slide-right ${rightVisible ? "visible" : ""}`}>
             <Card className="glass-premium p-6 card-glow h-full">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center">
                   <Youtube className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-gradient">
-                  YouTube Channels on Telegram
-                </h3>
+                <h3 className="text-2xl font-bold text-gradient">YouTube Channels on Telegram</h3>
               </div>
-              
+
               <p className="text-sm text-muted-foreground mb-6">
                 Access curated written preparation material from top YouTube educators
               </p>
@@ -147,3 +143,4 @@ const Telegram = () => {
 };
 
 export default Telegram;
+
