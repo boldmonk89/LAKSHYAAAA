@@ -26,6 +26,7 @@ const youtubeChannels = [
   { name: "Defence Wallah", link: "https://t.me/defencewallahe" },
   { name: "Learn with Sumit", link: "https://t.me/learnwithsumit" },
   { name: "Indian Defence Buddy Yt", link: "https://youtube.com/@indiandefencebuddy?si=NVriUw7WKe0pMIMj" },
+  { name: "SSB Future Officers", link:"https://t.me/SSBFutureOfficer2020" },
 ];
 
 const Telegram = () => {
