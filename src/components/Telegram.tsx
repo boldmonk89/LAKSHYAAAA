@@ -15,6 +15,7 @@ const telegramCommunities = [
   { name: "Rocha Vlogs Community", link: "https://t.me/rocha_vlogs_community" },
   { name: "Maj Gen Yash Mor", link: "https://t.me/majgenyashmor" },
   { name: "Pehla Kadam SSB", link: "https://t.me/Pehlakadamssb" },
+  { name: "Indian Defence Buddy", link: "https://t.me/indiandefencebuddy7" },
 ];
 
 const youtubeChannels = [
@@ -24,6 +25,7 @@ const youtubeChannels = [
   { name: "Defence Wallah CDS", link: "https://t.me/Defencewallahcds" },
   { name: "Defence Wallah", link: "https://t.me/defencewallahe" },
   { name: "Learn with Sumit", link: "https://t.me/learnwithsumit" },
+  { name: "Indian Defence Buddy Yt", link: "https://youtube.com/@indiandefencebuddy?si=NVriUw7WKe0pMIMj" },
 ];
 
 const Telegram = () => {
