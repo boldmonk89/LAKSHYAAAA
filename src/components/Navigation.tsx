@@ -18,6 +18,7 @@ const Navigation = () => {
     { label: "What SSB Demands", id: "what-ssb-demands" },
     { label: "Study Materials", id: "study-materials" },
     { label: "AI PSYCH Analyzer", id: "ai-psych-analyzer" },
+    { label: "Communities", id: "communities" },
     { label: "Video Resources", id: "video-resources" },
     { label: "SSB Boards", id: "ssb-boards" },
     { label: "Contact", id: "contact" },
