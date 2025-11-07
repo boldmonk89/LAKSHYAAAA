@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import heroImage from "@/assets/lakshya-poster.jpg";
+import heroBg from "@/assets/ima-dehradun.jpg"; // ⬅️ IMA image
 import { useEffect, useRef, useState } from "react";
 
 const Hero = () => {
@@ -9,18 +9,16 @@ const Hero = () => {
   const fadeIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    // Create audio
+    // audio file must be in /public
     audioRef.current = new Audio("/lakshya-theme.mp3");
     audioRef.current.loop = false;
     audioRef.current.volume = 0.5;
-    
-    // Play for 5 seconds then stop
+
     const playAudio = async () => {
       try {
         await audioRef.current?.play();
         setIsPlaying(true);
-        
-        // Stop after 5 seconds
+
         setTimeout(() => {
           if (audioRef.current) {
             audioRef.current.pause();
@@ -35,11 +33,8 @@ const Hero = () => {
 
     playAudio();
 
-    // Cleanup
     return () => {
-      if (fadeIntervalRef.current) {
-        clearInterval(fadeIntervalRef.current);
-      }
+      if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current = null;
@@ -48,31 +43,37 @@ const Hero = () => {
   }, []);
 
   return (
-    <section ref={heroRef} id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-      {/* Background Image with Blur and Opacity */}
-      <div 
+    <section
+      ref={heroRef}
+      id="hero"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16"
+    >
+      {/* Fixed hero background (IMA) */}
+      <div
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: `url(${heroImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          opacity: 0.8,
-          filter: 'blur(5px)',
+          backgroundImage: `url(${heroBg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed", // keep it fixed
+          opacity: 0.9,
+          filter: "blur(2px)",
         }}
+        aria-hidden
       />
-      
-      {/* Dark Overlay - reduced */}
-      <div className="absolute inset-0 bg-black/25 z-10" />
+
+      {/* Subtle dark overlay to keep text readable */}
+      <div className="absolute inset-0 bg-black/25 z-10" aria-hidden />
 
       {/* Content */}
       <div className="relative z-20 text-center px-4 max-w-5xl mx-auto">
-        {/* Lakshya with golden background */}
         <div className="mb-8">
           <div className="inline-block px-8 py-4 rounded-2xl glass-premium">
             <h1 className="text-6xl md:text-8xl font-bold text-gradient glow mb-2">
               LAKSHYA
             </h1>
           </div>
+
           <div className="mt-6 space-y-2">
             <p className="text-3xl md:text-4xl text-foreground/95 font-bold tracking-wide">
               मनसा वाचा कर्मणा
@@ -81,6 +82,7 @@ const Hero = () => {
               In thought, word, and deed
             </p>
           </div>
+
           <p className="text-2xl md:text-3xl text-foreground/90 font-semibold tracking-wide mt-6">
             Har Haal Me Pana Hai
           </p>
@@ -98,18 +100,27 @@ const Hero = () => {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Button 
-            size="lg" 
+          <Button
+            size="lg"
             className="bg-primary hover:bg-primary-glow text-lg px-8 py-6 shadow-glow transition-all duration-300 hover:scale-105"
-            onClick={() => document.getElementById('study-materials')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() =>
+              document
+                .getElementById("study-materials")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
           >
             Access Study Materials
           </Button>
-          <Button 
-            size="lg" 
+
+          <Button
+            size="lg"
             variant="outline"
             className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground text-lg px-8 py-6 transition-all duration-300 hover:scale-105"
-            onClick={() => document.getElementById('ai-psych-analyzer')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() =>
+              document
+                .getElementById("ai-psych-analyzer")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
           >
             Try AI PSYCH Analyzer
           </Button>
