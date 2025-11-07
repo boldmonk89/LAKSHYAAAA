@@ -27,7 +27,7 @@ const Index = () => {
   }
 
   return (
-    <main className="relative z-10 min-h-screen bg-transparent">
+    <main className="min-h-screen">
       <Navigation />
 
       {/* 🔊 Plays ~5s on each load; if autoplay is blocked, shows a tiny consent bar */}
