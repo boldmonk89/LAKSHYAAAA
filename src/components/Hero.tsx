@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import heroBg from "@/assets/ima-dehradun.jpg"; // ⬅️ IMA image
+import heroBg from "@/assets/ima-dehradun.jpg";
 import { useEffect, useRef, useState } from "react";
 
 const Hero = () => {
@@ -9,7 +9,7 @@ const Hero = () => {
   const fadeIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    // audio file must be in /public
+    // Put lakshya-theme.mp3 in /public
     audioRef.current = new Audio("/lakshya-theme.mp3");
     audioRef.current.loop = false;
     audioRef.current.volume = 0.5;
@@ -18,7 +18,6 @@ const Hero = () => {
       try {
         await audioRef.current?.play();
         setIsPlaying(true);
-
         setTimeout(() => {
           if (audioRef.current) {
             audioRef.current.pause();
@@ -26,8 +25,8 @@ const Hero = () => {
             setIsPlaying(false);
           }
         }, 5000);
-      } catch (error) {
-        console.log("Audio autoplay blocked:", error);
+      } catch (e) {
+        console.log("Audio autoplay blocked:", e);
       }
     };
 
@@ -55,14 +54,14 @@ const Hero = () => {
           backgroundImage: `url(${heroBg})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          backgroundAttachment: "fixed", // keep it fixed
+          backgroundAttachment: "fixed", // keeps hero bg fixed on scroll (desktop)
           opacity: 0.9,
           filter: "blur(2px)",
         }}
         aria-hidden
       />
 
-      {/* Subtle dark overlay to keep text readable */}
+      {/* Dark overlay for contrast */}
       <div className="absolute inset-0 bg-black/25 z-10" aria-hidden />
 
       {/* Content */}
@@ -73,7 +72,6 @@ const Hero = () => {
               LAKSHYA
             </h1>
           </div>
-
           <div className="mt-6 space-y-2">
             <p className="text-3xl md:text-4xl text-foreground/95 font-bold tracking-wide">
               मनसा वाचा कर्मणा
@@ -82,7 +80,6 @@ const Hero = () => {
               In thought, word, and deed
             </p>
           </div>
-
           <p className="text-2xl md:text-3xl text-foreground/90 font-semibold tracking-wide mt-6">
             Har Haal Me Pana Hai
           </p>
@@ -111,7 +108,6 @@ const Hero = () => {
           >
             Access Study Materials
           </Button>
-
           <Button
             size="lg"
             variant="outline"
@@ -126,8 +122,8 @@ const Hero = () => {
           </Button>
         </div>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+        {/* Scroll indicator */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
           <div className="w-6 h-10 border-2 border-primary rounded-full flex items-start justify-center p-2">
             <div className="w-1 h-3 bg-primary rounded-full" />
           </div>
@@ -136,5 +132,7 @@ const Hero = () => {
     </section>
   );
 };
+
+export default Hero;
 
 export default Hero;
