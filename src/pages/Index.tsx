@@ -27,7 +27,7 @@ const Index = () => {
   }
 
   return (
-    <main className="min-h-screen">
+    <main className="relative z-10 min-h-screen bg-transparent">
       <Navigation />
 
       {/* 🔊 Plays ~5s on each load; if autoplay is blocked, shows a tiny consent bar */}
@@ -49,6 +49,5 @@ const Index = () => {
 };
 
 export default Index;
-
 
 
