@@ -43,7 +43,7 @@ const videos = [
 ];
 
 const VideoCard = ({ video, index }: { video: typeof videos[0], index: number }) => {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const { ref, isVisible } = useScrollAnimation({ threshold: 0.2 });
   
   return (
@@ -54,21 +54,19 @@ const VideoCard = ({ video, index }: { video: typeof videos[0], index: number })
     >
       <Card 
         className="glass-premium overflow-hidden transition-all duration-300 hover:scale-105 card-glow group"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
       >
-        {/* Video Thumbnail/Embed */}
+        {/* Video Embed - Always Embedded */}
         <div className="relative aspect-video overflow-hidden bg-black/50">
-          {isHovered ? (
+          {isPlaying ? (
             <iframe
               className="w-full h-full"
-              src={`https://www.youtube.com/embed/${video.videoId}?autoplay=1&mute=1`}
+              src={`https://www.youtube.com/embed/${video.videoId}?autoplay=1`}
               title={video.title}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             />
           ) : (
-            <>
+            <div className="relative w-full h-full cursor-pointer" onClick={() => setIsPlaying(true)}>
               <img 
                 src={video.thumbnail} 
                 alt={video.title}
@@ -79,7 +77,7 @@ const VideoCard = ({ video, index }: { video: typeof videos[0], index: number })
                   <Play className="w-8 h-8 text-white ml-1" fill="white" />
                 </div>
               </div>
-            </>
+            </div>
           )}
         </div>
 

@@ -11,17 +11,21 @@ serve(async (req) => {
   }
 
   try {
-    const { testType, content } = await req.json();
+    const { testType, content, language = 'english' } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
 
     if (!LOVABLE_API_KEY) {
       throw new Error('LOVABLE_API_KEY is not configured');
     }
 
+    const languageInstruction = language === 'hindi' 
+      ? "IMPORTANT: Provide ALL your analysis in Hindi language (हिंदी में)." 
+      : "";
+    
     let systemPrompt = "";
     
     if (testType === 'tat') {
-      systemPrompt = `You are an expert SSB psychologist analyzing TAT stories. Evaluate based on 15 Officer-Like Qualities (OLQs):
+      systemPrompt = `You are an expert SSB psychologist analyzing TAT stories. ${languageInstruction} Evaluate based on 15 Officer-Like Qualities (OLQs):
 1. Effective Intelligence
 2. Reasoning Ability
 3. Organizing Ability
@@ -48,7 +52,7 @@ Analyze the story and provide:
 
 Be specific, constructive, and SSB-focused. Stories should show positive action, leadership, helping nature, and practical solutions.`;
     } else if (testType === 'wat') {
-      systemPrompt = `You are an expert SSB psychologist analyzing WAT responses. Evaluate based on Officer-Like Qualities (OLQs).
+      systemPrompt = `You are an expert SSB psychologist analyzing WAT responses. ${languageInstruction} Evaluate based on Officer-Like Qualities (OLQs).
 
 The candidate writes a sentence using a given word. Analyze:
 1. Which OLQs are reflected
@@ -57,9 +61,10 @@ The candidate writes a sentence using a given word. Analyze:
 4. How to make the sentence more impactful
 5. Better alternative sentences showing stronger OLQs
 
-Look for: positivity, action-orientation, leadership, helping nature, responsibility, determination.`;
+Look for: positivity, action-orientation, leadership, helping nature, responsibility, determination.
+REMINDER for candidates: In SSB WAT, you get only 15 seconds per word, so aim for 5-6 words maximum for quick thinking.`;
     } else if (testType === 'srt') {
-      systemPrompt = `You are an expert SSB psychologist analyzing SRT responses. Evaluate based on Officer-Like Qualities (OLQs).
+      systemPrompt = `You are an expert SSB psychologist analyzing SRT responses. ${languageInstruction} Evaluate based on Officer-Like Qualities (OLQs).
 
 The candidate describes how they would react to a situation. Analyze:
 1. Which OLQs are demonstrated
@@ -68,7 +73,8 @@ The candidate describes how they would react to a situation. Analyze:
 4. How to improve the response
 5. What an ideal officer-like response would be
 
-Good responses show: quick decision-making, practical solutions, taking initiative, helping others, confidence, and courage.`;
+Good responses show: quick decision-making, practical solutions, taking initiative, helping others, confidence, and courage.
+REMINDER for candidates: In SSB SRT, give 1-2 line detailed answers so the psychologist clearly understands your thought process.`;
     }
 
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {

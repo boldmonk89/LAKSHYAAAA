@@ -74,7 +74,17 @@ All colors MUST be HSL.
 
 @layer utilities {
   .text-gradient {
-    @apply bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent;
+    background: linear-gradient(120deg, hsl(35 95% 55%), hsl(25 90% 60%), hsl(15 85% 55%), hsl(35 95% 55%));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-shift 3s ease infinite;
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% { background-position: 0% center; }
+    50% { background-position: 100% center; }
   }
 
   .glow {

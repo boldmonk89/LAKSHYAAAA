@@ -31,6 +31,8 @@ const ssbLocations = [
   { lat: 12.9716, lng: 77.5946, name: 'NSB Bengaluru', type: 'navy' },
   { lat: 17.6868, lng: 83.2185, name: 'NSB Visakhapatnam', type: 'navy' },
   { lat: 22.5726, lng: 88.3639, name: 'NSB Kolkata', type: 'navy' },
+  { lat: 28.5355, lng: 77.3910, name: 'CSB Noida', type: 'navy' },
+  { lat: 15.2993, lng: 74.1240, name: 'CSB Goa', type: 'navy' },
 ];
 
 const SSBMap = () => {
@@ -54,7 +56,7 @@ const SSBMap = () => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full relative">
       <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY}>
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
@@ -92,6 +94,25 @@ const SSBMap = () => {
           ))}
         </GoogleMap>
       </LoadScript>
+
+      {/* Legend */}
+      <div className="absolute bottom-4 right-4 bg-black/80 backdrop-blur-sm border border-primary/30 rounded-lg p-4 text-sm">
+        <h4 className="font-bold text-gradient mb-2">Legend</h4>
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 rounded-full bg-[#D97706]"></div>
+            <span className="text-foreground/80">Army SSB</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 rounded-full bg-[#3B82F6]"></div>
+            <span className="text-foreground/80">Air Force AFSB</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 rounded-full bg-[#0EA5E9]"></div>
+            <span className="text-foreground/80">Navy/CSB</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

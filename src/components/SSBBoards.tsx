@@ -111,6 +111,16 @@ const navyBoards = [
     boards: [{ name: "NSB", batch: "" }],
     stays: ["Gurudwara Bara Sikh Sangat – ₹300/day (Food included)"]
   },
+  {
+    location: "Noida",
+    boards: [{ name: "CSB Noida", batch: "" }],
+    stays: ["Hotels in Sector 62, easily accessible from Delhi NCR"]
+  },
+  {
+    location: "Goa",
+    boards: [{ name: "CSB Goa", batch: "" }],
+    stays: ["Hotels in Panaji, accessible from Goa International Airport"]
+  },
 ];
 
 const BoardSection = ({ location, boards, stays, address }: { location: string, boards: any[], stays: string[], address?: string }) => (

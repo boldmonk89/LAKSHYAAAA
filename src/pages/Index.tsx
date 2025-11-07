@@ -10,6 +10,7 @@ import SSBBoards from "@/components/SSBBoards";
 import Telegram from "@/components/Telegram";
 import Motivation from "@/components/Motivation";
 import Contact from "@/components/Contact";
+import Footer from "@/components/Footer";
 import Loader from "@/components/Loader";
 import TelegramFAB from "@/components/TelegramFAB";
 
@@ -41,6 +42,7 @@ const Index = () => {
       <Telegram />
       <Motivation />
       <Contact />
+      <Footer />
       <TelegramFAB />
     </main>
   );
