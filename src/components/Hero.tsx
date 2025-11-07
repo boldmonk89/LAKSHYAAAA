@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import heroBg from "@/assets/ima-dehradun.jpg";
+import heroImage from "@/assets/lakshya-poster.jpg";
 import { useEffect, useRef, useState } from "react";
 
 const Hero = () => {
@@ -9,15 +9,18 @@ const Hero = () => {
   const fadeIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    // Put lakshya-theme.mp3 in /public
+    // Create audio
     audioRef.current = new Audio("/lakshya-theme.mp3");
     audioRef.current.loop = false;
     audioRef.current.volume = 0.5;
-
+    
+    // Play for 5 seconds then stop
     const playAudio = async () => {
       try {
         await audioRef.current?.play();
         setIsPlaying(true);
+        
+        // Stop after 5 seconds
         setTimeout(() => {
           if (audioRef.current) {
             audioRef.current.pause();
@@ -25,15 +28,18 @@ const Hero = () => {
             setIsPlaying(false);
           }
         }, 5000);
-      } catch (e) {
-        console.log("Audio autoplay blocked:", e);
+      } catch (error) {
+        console.log("Audio autoplay blocked:", error);
       }
     };
 
     playAudio();
 
+    // Cleanup
     return () => {
-      if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+      if (fadeIntervalRef.current) {
+        clearInterval(fadeIntervalRef.current);
+      }
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current = null;
@@ -42,30 +48,25 @@ const Hero = () => {
   }, []);
 
   return (
-    <section
-      ref={heroRef}
-      id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16"
-    >
-      {/* Fixed hero background (IMA) */}
-      <div
+    <section ref={heroRef} id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+      {/* Background Image with Blur and Opacity */}
+      <div 
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: `url(${heroBg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundAttachment: "fixed", // keeps hero bg fixed on scroll (desktop)
-          opacity: 0.9,
-          filter: "blur(2px)",
+          backgroundImage: `url(${heroImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: 0.8,
+          filter: 'blur(5px)',
         }}
-        aria-hidden
       />
-
-      {/* Dark overlay for contrast */}
-      <div className="absolute inset-0 bg-black/25 z-10" aria-hidden />
+      
+      {/* Dark Overlay - reduced */}
+      <div className="absolute inset-0 bg-black/25 z-10" />
 
       {/* Content */}
       <div className="relative z-20 text-center px-4 max-w-5xl mx-auto">
+        {/* Lakshya with golden background */}
         <div className="mb-8">
           <div className="inline-block px-8 py-4 rounded-2xl glass-premium">
             <h1 className="text-6xl md:text-8xl font-bold text-gradient glow mb-2">
@@ -97,33 +98,25 @@ const Hero = () => {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Button
-            size="lg"
+          <Button 
+            size="lg" 
             className="bg-primary hover:bg-primary-glow text-lg px-8 py-6 shadow-glow transition-all duration-300 hover:scale-105"
-            onClick={() =>
-              document
-                .getElementById("study-materials")
-                ?.scrollIntoView({ behavior: "smooth" })
-            }
+            onClick={() => document.getElementById('study-materials')?.scrollIntoView({ behavior: 'smooth' })}
           >
             Access Study Materials
           </Button>
-          <Button
-            size="lg"
+          <Button 
+            size="lg" 
             variant="outline"
             className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground text-lg px-8 py-6 transition-all duration-300 hover:scale-105"
-            onClick={() =>
-              document
-                .getElementById("ai-psych-analyzer")
-                ?.scrollIntoView({ behavior: "smooth" })
-            }
+            onClick={() => document.getElementById('ai-psych-analyzer')?.scrollIntoView({ behavior: 'smooth' })}
           >
             Try AI PSYCH Analyzer
           </Button>
         </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
           <div className="w-6 h-10 border-2 border-primary rounded-full flex items-start justify-center p-2">
             <div className="w-1 h-3 bg-primary rounded-full" />
           </div>
@@ -134,5 +127,4 @@ const Hero = () => {
 };
 
 export default Hero;
-
 export default Hero;
