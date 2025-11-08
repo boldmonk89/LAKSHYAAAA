@@ -57,7 +57,6 @@ const Index = () => {
       <Contact />
       <SSBTipsCarousel />
       <Footer />
-      <TelegramFAB />
     </main>
   );
 };
