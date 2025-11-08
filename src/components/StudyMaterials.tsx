@@ -81,14 +81,14 @@ const StudyMaterials = () => {
               </ul>
 
               <Button 
-                className="w-full bg-primary hover:bg-primary-glow shadow-glow transition-all duration-300 hover:scale-105"
-                onClick={() => window.open(driveLink, '_blank')}
-              >
-                <Download className="w-4 h-4 mr-2" />
-                Access Google Drive
-                <ExternalLink className="w-4 h-4 ml-2" />
-              </Button>
-            </Card>
+              className="w-full bg-primary hover:bg-primary-glow shadow-glow transition-all duration-300 hover:scale-105 group"
+              onClick={() => window.open(driveLink, '_blank')}
+            >
+              <Download className="w-4 h-4 mr-2 animate-bounce group-hover:animate-none transition-all" />
+              Access Google Drive
+              <ExternalLink className="w-4 h-4 ml-2" />
+            </Button>
+          </Card>
           </div>
 
           {/* Features Card */}
