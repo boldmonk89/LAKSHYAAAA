@@ -179,7 +179,7 @@ const SSBBoards = () => {
       />
       
       {/* Overlay - 10% opacity */}
-      
+      <div className="absolute inset-0 bg-black/40 z-10" />
 
       <div className="relative z-20 max-w-7xl mx-auto">
         <div ref={titleRef} className={`text-center mb-16 scroll-fade-up ${titleVisible ? 'visible' : ''}`}>
