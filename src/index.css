@@ -66,7 +66,7 @@ All colors MUST be HSL.
 
   body {
     @apply text-foreground antialiased;
-   font-family: 'Inter', system-ui, -apple-system, sans-serif;
+   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     background: transparent;
     position: relative;
     min-height: 100vh;
