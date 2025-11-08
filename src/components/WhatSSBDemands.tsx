@@ -68,10 +68,10 @@ const WhatSSBDemands = () => {
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
   
   return (
-    <section id="what-ssb-demands" className="relative py-24 px-4 overflow-hidden">
+    <section id="what-ssb-demands" className="relative isolate z-[60] py-24 overflow-hidden">
       {/* Background Image */}
       <div 
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-10 pointer-events-none glass" />
         style={{
           backgroundImage: `url(${backgroundImage})`,
           backgroundSize: 'cover',
