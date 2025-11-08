@@ -42,8 +42,15 @@ const Hero = () => {
 
     playAudio();
 
+    // Image carousel - change every 5 seconds
+    const carouselInterval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
+    }, 5000);
+
+
     // Cleanup
     return () => {
+      clearInterval(carouselInterval);
       if (fadeIntervalRef.current) {
         clearInterval(fadeIntervalRef.current);
       }
@@ -56,7 +63,7 @@ const Hero = () => {
 
  return (
     <section ref={heroRef} id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-      {/* Background Image Carousel with Blur and Opacity */}
+  {/* Background Image Carousel with Blur and Opacity */}
       {heroImages.map((image, index) => (
         <div
           key={index}
