@@ -6,7 +6,7 @@ interface MotivationalLineProps {
 const MotivationalLine = ({ english, hindi }: MotivationalLineProps) => {
   return (
     <div className="mt-8 max-w-3xl mx-auto">
-      <div className="glass-premium p-6 rounded-lg border border-primary/30 backdrop-blur-md bg-black/20">
+      <div className="glass-premium p-6 rounded-lg border border-primary/15 backdrop-blur-md bg-black/20">
         <p className="text-lg md:text-xl font-semibold text-foreground mb-2 text-center">
           {english}
         </p>
