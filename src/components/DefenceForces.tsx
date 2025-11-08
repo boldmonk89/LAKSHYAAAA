@@ -29,11 +29,11 @@ const DefenceForces = () => {
   const { ref: cardsRef, isVisible: cardsVisible } = useScrollAnimation({ threshold: 0.2 });
 
   return (
-    <section className="relative py-24 overflow-hidden">
+    <section className="relative isolate z-[60] py-24 overflow-hidden">
       {/* Light glass overlay to keep text readable */}
-      <div className="absolute inset-0 glass" />
+      <div className="absolute inset-0 -z-10 pointer-events-none glass" />
       
-      <div className="container relative z-10 mx-auto px-4">
+      <div className="container relative z-[1] mx-auto px-4">
         <div
           ref={titleRef}
           className={`text-center mb-16 scroll-fade-up ${titleVisible ? "visible" : ""}`}
