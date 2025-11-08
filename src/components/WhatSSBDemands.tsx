@@ -82,6 +82,8 @@ const WhatSSBDemands = () => {
       />
       
       {/* Overlay - 10% opacity */}
+          <div className="absolute inset-0 bg-black/70 z-10" />
+      <div className="absolute inset-0 shadow-section z-10" />
       
 
       {/* Content */}
