@@ -130,7 +130,7 @@ const JourneyTimeline = () => {
       />
       
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/40 z-10" />
+      <div className="absolute inset-0 bg-black/15 z-10" />
 
       {/* Content */}
       <div className="relative z-20 max-w-6xl mx-auto">
