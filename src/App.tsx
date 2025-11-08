@@ -8,6 +8,9 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ParallaxBackground from "./components/ParallaxBackground";
 
+// 👇 Import this new component
+import FloatingMenu from "@/components/FloatingMenu";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -23,11 +26,11 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
+
+      {/* 👇 Add your floating hamburger menu here */}
+      <FloatingMenu />
     </TooltipProvider>
   </QueryClientProvider>
 );
 
 export default App;
-
-
-
