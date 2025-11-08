@@ -17,6 +17,10 @@ import Footer from "@/components/Footer";
 import Loader from "@/components/Loader";
 import SSBTipsCarousel from "@/components/SSBTipsCarousel";
 import TelegramFAB from "@/components/TelegramFAB";
+import ScrollToTop from "@/components/ScrollToTop";
+import ScrollProgress from "@/components/ScrollProgress";
+
+
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -32,6 +36,8 @@ const Index = () => {
 
   return (
     <main className="min-h-screen">
+      <ScrollProgress />
+      <ScrollToTop />
       <Navigation />
 
       {/* 🔊 Plays ~10s on each load; if autoplay is blocked, shows a tiny consent bar */}
