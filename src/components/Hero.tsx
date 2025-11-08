@@ -52,10 +52,24 @@ const Hero = () => {
         audioRef.current = null;
       }
     };
-  }, []);
+  }, [heroImages.length]);
 
-  return (
+ return (
     <section ref={heroRef} id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+      {/* Background Image Carousel with Blur and Opacity */}
+      {heroImages.map((image, index) => (
+        <div
+          key={index}
+          className="absolute inset-0 z-0 transition-opacity duration-1000"
+          style={{
+            backgroundImage: `url(${image})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            opacity: currentImageIndex === index ? 0.8 : 0,
+            filter: 'blur(5px)',
+          }}
+        />
+      ))}
       {/* Content */}
       <div className="relative z-20 text-center px-4 max-w-5xl mx-auto">
         {/* Lakshya with golden background */}
