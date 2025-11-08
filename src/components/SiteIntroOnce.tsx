@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default function SiteIntroOnce({
-  ms = 5000,
+  ms = 10000,
   tryAutoplayFirst = true,
 }: Props) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -66,11 +66,11 @@ export default function SiteIntroOnce({
 
   // Minimal consent UI (shows only if autoplay blocked)
   return (
-    <div className="fixed inset-x-0 bottom-4 mx-auto w-[min(92%,520px)] rounded-xl border bg-white/90 backdrop-blur p-4 shadow-lg z-[9999]">
+    <div className="fixed inset-x-0 bottom-4 mx-auto w-[min(92%,520px)] rounded-xl border border-primary/30 bg-black/70 backdrop-blur-md p-4 shadow-2xl z-[9999] text-white">
       <div className="flex items-center justify-between gap-3">
         <div className="text-sm">
           <div className="font-semibold">Play sound?</div>
-          <div>We’ll play ~5 seconds, then stop.</div>
+          <div>We’ll play ~10 seconds, then stop.</div>
         </div>
         <div className="flex gap-2">
           <button
