@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 import WhatSSBDemands from "@/components/WhatSSBDemands";
 import StudyMaterials from "@/components/StudyMaterials";
 import DefenceForces from "@/components/DefenceForces";
+import JourneyTimeline from "@/components/JourneyTimeline";
 import AIPsychAnalyzer from "@/components/AIPsychAnalyzer";
 import VideoResources from "@/components/VideoResources";
 import SSBBoards from "@/components/SSBBoards";
@@ -31,8 +32,8 @@ const Index = () => {
     <main className="min-h-screen">
       <Navigation />
 
-      {/* 🔊 Plays ~5s on each load; if autoplay is blocked, shows a tiny consent bar */}
-      <SiteIntroOnce ms={5000} tryAutoplayFirst />
+      {/* 🔊 Plays ~10s on each load; if autoplay is blocked, shows a tiny consent bar */}
+      <SiteIntroOnce ms={10000} tryAutoplayFirst />
 
       <Hero />
       <WhatSSBDemands />
