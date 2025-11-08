@@ -27,7 +27,7 @@ const Hero = () => {
             audioRef.current.currentTime = 0;
             setIsPlaying(false);
           }
-        }, 5000);
+        }, 10000);
       } catch (error) {
         console.log("Audio autoplay blocked:", error);
       }
