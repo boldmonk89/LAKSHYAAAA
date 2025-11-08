@@ -48,7 +48,7 @@ const Telegram = () => {
         }}
       />
       {/* Overlay */}
-      <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-10" />
+      <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-10" />
 
       {/* Content */}
       <div className="relative z-20 max-w-7xl mx-auto">
