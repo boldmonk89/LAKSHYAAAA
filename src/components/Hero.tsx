@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import heroImage from "@/assets/lakshya-poster.jpg";
+import heroImage from "@/assets/ima-dehradun.jpg";
 import { useEffect, useRef, useState } from "react";
 
 const Hero = () => {
