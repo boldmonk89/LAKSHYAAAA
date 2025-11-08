@@ -32,7 +32,7 @@ const Motivation = () => {
       />
       
       {/* Overlay - reduced darkness */}
-      
+       <div className="absolute inset-0 bg-black/40 z-10" />
       
       {/* Content */}
       <div className="relative z-20 max-w-5xl mx-auto">
