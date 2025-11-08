@@ -21,6 +21,9 @@ serve(async (req) => {
     const languageInstruction = language === 'hindi' 
       ? "IMPORTANT: Provide ALL your analysis in Hindi language (हिंदी में)." 
       : "";
+
+     console.log(`Analyzing ${testType} with Gemini...`);
+
     
     let systemPrompt = "";
     
