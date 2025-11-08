@@ -43,6 +43,8 @@ const Index = () => {
       <AIPsychAnalyzer />
       <VideoResources />
       <SSBBoards />
+      <ParentsInspiration />
+      <JourneyTimeline />
       <Telegram />
       <Motivation />
       <Contact />
