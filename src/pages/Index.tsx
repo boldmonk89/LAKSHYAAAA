@@ -17,6 +17,7 @@ import Footer from "@/components/Footer";
 import Loader from "@/components/Loader";
 import SSBTipsCarousel from "@/components/SSBTipsCarousel";
 import ScrollToTop from "@/components/ScrollToTop";
+import TelegramFAB from "@/components/TelegramFAB";
 import ScrollProgress from "@/components/ScrollProgress";
 
 
@@ -55,6 +56,7 @@ const Index = () => {
       <Motivation />
       <Contact />
       <SSBTipsCarousel />
+      <TelegramFAB />
       <Footer />
     </main>
   );
