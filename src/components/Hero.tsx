@@ -1,5 +1,8 @@
 import { Button } from "@/components/ui/button";
-import heroImage from "@/assets/ima-dehradun.jpg";
+import imaImage from "@/assets/ima-dehradun.jpg";
+import ndaImage from "@/assets/nda-building.jpg";
+import lakshyaImage from "@/assets/lakshya-hero.jpg";
+import cadetsImage from "@/assets/cadets-celebration.jpg";
 import { useEffect, useRef, useState } from "react";
 
 const Hero = () => {
@@ -7,6 +10,10 @@ const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const fadeIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Carousel state
+  const heroImages = [imaImage, ndaImage, lakshyaImage, cadetsImage];
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     // Create audio
