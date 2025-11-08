@@ -70,6 +70,9 @@ const Hero = () => {
           }}
         />
       ))}
+
+       <div className="absolute inset-0 bg-black/25 z-10" />
+      
       {/* Content */}
       <div className="relative z-20 text-center px-4 max-w-5xl mx-auto">
         {/* Lakshya with golden background */}
