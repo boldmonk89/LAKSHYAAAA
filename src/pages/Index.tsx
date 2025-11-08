@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import WhatSSBDemands from "@/components/WhatSSBDemands";
-import SSBTipsCarousel from "@/components/SSBTipsCarousel";
 import StudyMaterials from "@/components/StudyMaterials";
 import ParentsInspiration from "@/components/ParentsInspiration";
 import DefenceForces from "@/components/DefenceForces";
@@ -16,6 +15,7 @@ import Motivation from "@/components/Motivation";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Loader from "@/components/Loader";
+import SSBTipsCarousel from "@/components/SSBTipsCarousel";
 import TelegramFAB from "@/components/TelegramFAB";
 
 const Index = () => {
@@ -47,9 +47,9 @@ const Index = () => {
       <ParentsInspiration />
       <JourneyTimeline />
       <Telegram />
-      <SSBTipsCarousel />
       <Motivation />
       <Contact />
+      <SSBTipsCarousel />
       <Footer />
       <TelegramFAB />
     </main>
