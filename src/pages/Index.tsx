@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import WhatSSBDemands from "@/components/WhatSSBDemands";
+import SSBTipsCarousel from "@/components/SSBTipsCarousel";
 import StudyMaterials from "@/components/StudyMaterials";
 import ParentsInspiration from "@/components/ParentsInspiration";
 import DefenceForces from "@/components/DefenceForces";
@@ -46,6 +47,7 @@ const Index = () => {
       <ParentsInspiration />
       <JourneyTimeline />
       <Telegram />
+      <SSBTipsCarousel />
       <Motivation />
       <Contact />
       <Footer />
