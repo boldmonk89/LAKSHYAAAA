@@ -64,33 +64,50 @@ All colors MUST be HSL.
 
   body {
     @apply text-foreground antialiased;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Orbitron', 'Rajdhani', 'Inter', system-ui, -apple-system, sans-serif;
     background: hsl(var(--background));
     position: relative;
     min-height: 100vh;
   }
 
-  /* ===== Fixed background: 2 images, 90% opacity, 2px blur ===== */
+  /* ===== Parallax background: 4 images, 90% opacity, 2px blur ===== */
   body::before {
     content: '';
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 200vh; /* 2 images × 100vh each */
+    height: 400vh; /* 4 images × 100vh each */
     z-index: -1;
-    opacity: 0.9;           /* 90% */
-    filter: blur(2px);      /* ~2% → 2px practical */
+    opacity: 0.9;
+    filter: blur(2px);
     background-image:
-      url('./assets/ima-dehradun.jpg'), /* image #1 */
-      url('./assets/passout.jpg');      /* image #2 */
-    background-size: 100% 50%, 100% 50%;
-    background-position: 0 0, 0 50%;
+      url('./assets/nda-bg.jpg'),
+      url('./assets/passout.jpg'),
+      url('./assets/lakshya-bg.png'),
+      url('./assets/ima-bg.jpg');
+    background-size: 100% 25%, 100% 25%, 100% 25%, 100% 25%;
+    background-position: 0 0%, 0 25%, 0 50%, 0 75%;
     background-repeat: no-repeat;
+    background-attachment: fixed;
+    will-change: transform;
+  }
+  
+  /* Parallax scroll effect */
+  @supports (background-attachment: fixed) {
+    body::before {
+      transform: translateZ(0);
+    }
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold tracking-tight;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Enhanced text visibility */
+  p, span, div {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
   }
 }
 
