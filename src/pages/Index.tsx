@@ -34,7 +34,7 @@ const Index = () => {
       <Navigation />
 
       {/* 🔊 Plays ~10s on each load; if autoplay is blocked, shows a tiny consent bar */}
-      <SiteIntroOnce ms={10000} tryAutoplayFirst />
+      <SiteIntroOnce ms={15000} tryAutoplayFirst />
 
       <Hero />
       <WhatSSBDemands />
