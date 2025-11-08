@@ -63,7 +63,7 @@ const DefenceForces = () => {
             >
               {/* Insignia */}
               <div className="flex justify-center mb-6">
-                <div className="w-40 h-40 flex items-center justify-center p-4 rounded-full bg-background/30 group-hover:bg-background/50 transition-colors">
+                <div className="w-40 h-40 flex items-center justify-center p-4 rounded-full bg-white/10 group-hover:bg-white/20 transition-colors backdrop-blur-sm">
                   <img
                     src={force.insignia}
                     alt={`${force.name} Insignia`}

@@ -49,21 +49,6 @@ const Hero = () => {
 
   return (
     <section ref={heroRef} id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-      {/* Background Image with Blur and Opacity */}
-      <div 
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: `url(${heroImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          opacity: 0.8,
-          filter: 'blur(5px)',
-        }}
-      />
-      
-      {/* Dark Overlay - reduced */}
-      <div className="absolute inset-0 bg-black/25 z-10" />
-
       {/* Content */}
       <div className="relative z-20 text-center px-4 max-w-5xl mx-auto">
         {/* Lakshya with golden background */}

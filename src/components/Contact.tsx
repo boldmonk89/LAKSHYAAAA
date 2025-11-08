@@ -35,7 +35,7 @@ const Contact = () => {
       />
       
       {/* Overlay - 10% opacity */}
-      <div className="absolute inset-0 bg-black/10 z-10" />
+      
 
      
     </section>
