@@ -133,7 +133,7 @@ const SSBTipsCarousel = () => {
       id="ssb-tips"
       className={`py-20 px-4 relative scroll-fade-up ${isVisible ? 'visible' : ''}`}
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background pointer-events-none z-0" />
       
       <div className="container mx-auto max-w-6xl relative z-10">
         {/* Header */}
@@ -211,7 +211,7 @@ const SSBTipsCarousel = () => {
           <Button
             variant="outline"
             size="icon"
-            className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-background/80 backdrop-blur-sm border-primary/20 hover:bg-primary/10"
+            className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-background/80 backdrop-blur-sm border-primary/20 hover:bg-primary/10 z-20"
             onClick={goToPrevious}
           >
             <ChevronLeft className="w-6 h-6" />
@@ -219,7 +219,7 @@ const SSBTipsCarousel = () => {
           <Button
             variant="outline"
             size="icon"
-            className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-background/80 backdrop-blur-sm border-primary/20 hover:bg-primary/10"
+            className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-background/80 backdrop-blur-sm border-primary/20 hover:bg-primary/10 z-20"
             onClick={goToNext}
           >
             <ChevronRight className="w-6 h-6" />
