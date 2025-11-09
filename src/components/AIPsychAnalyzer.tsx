@@ -35,7 +35,7 @@ const AIPsychAnalyzer = () => {
   const [analysis, setAnalysis] = useState<PsychAnalysis | null>(null);
   const [activeTest, setActiveTest] = useState<'tat' | 'wat' | 'srt'>('tat');
   const [currentTatImage, setCurrentTatImage] = useState(0);
-  const [uploadedPiqImage, setUploadedPiqImage] = useState<File | null>(null);
+  const [uploadedTATImage, setUploadedTATImage] = useState<File | null>(null);
   const [uploadedStoryImage, setUploadedStoryImage] = useState<File | null>(null);
   const [analyzeInHindi, setAnalyzeInHindi] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -43,12 +43,12 @@ const AIPsychAnalyzer = () => {
   const { toast } = useToast();
 
 
-  const handlePiqImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTATImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setUploadedPiqImage(file);
+      setUploadedTATImage(file);
       toast({
-        title: "PIQ Image Uploaded",
+        title: "TAT Image Uploaded",
         description: `${file.name} ready for analysis`,
       });
     }
@@ -68,7 +68,7 @@ const AIPsychAnalyzer = () => {
   const handleAnalyze = async () => {
     const content = activeTest === 'tat' ? tatStory : activeTest === 'wat' ? watWord : srtSituation;
     
-    if (!content.trim() && !uploadedPiqImage && !uploadedStoryImage) {
+    if (!content.trim() && !uploadedTATImage && !uploadedStoryImage) {
       toast({
         title: "Input Required",
         description: `Please write your ${activeTest.toUpperCase()} response or upload images.`,
@@ -196,7 +196,7 @@ const AIPsychAnalyzer = () => {
               <Tabs defaultValue="type" className="mb-4">
                 <TabsList className="grid w-full grid-cols-2 mb-4">
                   <TabsTrigger value="type">Type Story</TabsTrigger>
-                  <TabsTrigger value="upload">Upload PIQ & Story</TabsTrigger>
+                  <TabsTrigger value="upload">Upload TAT & Story</TabsTrigger>
                 </TabsList>
                 
                 <TabsContent value="type">
@@ -235,22 +235,22 @@ const AIPsychAnalyzer = () => {
                       <input
                         type="file"
                         accept="image/*"
-                        onChange={handlePiqImageUpload}
+                        onChange={handleTATImageUpload}
                         className="hidden"
-                        id="piq-upload"
+                        id="TAT-upload"
                       />
                       <Upload className="w-12 h-12 text-primary mx-auto mb-4" />
                       <p className="text-sm text-muted-foreground mb-4">
-                        Upload PIQ Image
+                        Upload TAT Image
                       </p>
-                      <label htmlFor="piq-upload">
+                      <label htmlFor="TAT-upload">
                         <Button variant="outline" asChild>
-                          <span className="cursor-pointer">Choose PIQ Image</span>
+                          <span className="cursor-pointer">Choose TAT Image</span>
                         </Button>
                       </label>
-                      {uploadedPiqImage && (
+                      {uploadedTATImage && (
                         <p className="text-sm text-primary mt-2">
-                          Uploaded: {uploadedPiqImage.name}
+                          Uploaded: {uploadedTATImage.name}
                         </p>
                       )}
                     </div>
