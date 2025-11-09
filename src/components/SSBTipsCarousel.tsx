@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import { Lightbulb, Target, Brain, Heart, Shield, Star } from "lucide-react";
 import ndaBackground from "@/assets/nda-background.jpg";
-
+import Autoplay from "embla-carousel-autoplay";
 const tips = [
   {
     icon: Lightbulb,
@@ -85,6 +85,11 @@ const SSBTipsCarousel = () => {
               align: "start",
               loop: true,
             }}
+             plugins={[
+              Autoplay({
+                delay: 3000,
+              }),
+            ]}
             className="w-full"
           >
             <CarouselContent>
