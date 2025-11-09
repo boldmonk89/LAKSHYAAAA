@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 
 const Hero = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const fadeIntervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -19,6 +20,11 @@ const Hero = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
+     // Set video volume
+    if (videoRef.current) {
+      videoRef.current.volume = 0.5;
+    }
+    
     // Create audio
     audioRef.current = new Audio("/lakshya-theme.mp3");
     audioRef.current.loop = false;
@@ -66,7 +72,17 @@ const Hero = () => {
 
   return (
     <section ref={heroRef} id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-  {/* Background Image Carousel */}
+        {/* Video Background */}
+      <video
+        ref={videoRef}
+        autoPlay
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover z-0"
+      >
+        <source src="/hero-video.mp4" type="video/mp4" />
+      </video>
+      {/* Background Image Carousel */}
       {heroImages.map((image, index) => (
         <div
           key={index}
@@ -83,43 +99,43 @@ const Hero = () => {
 
        <div className="absolute inset-0 bg-black/25 z-20" />
       
-      {/* Content */}
-      <div className="relative z-30 text-center px-4 max-w-5xl mx-auto">
-        {/* Lakshya with golden background */}
-        <div className="mb-8">
-          <div className="inline-block px-8 py-4 rounded-2xl glass-premium">
-            <h1 className="text-6xl md:text-8xl font-bold text-gradient glow mb-2">
+      {/* Content - Right Side with Fade */}
+      <div className="relative z-20 text-center px-4 max-w-lg mr-8 md:mr-16 animate-fade-in">
+         {/* Lakshya with golden background */}
+        <div className="mb-6">
+          <div className="inline-block px-6 py-3 rounded-2xl glass-premium">
+            <h1 className="text-4xl md:text-5xl font-bold text-gradient glow mb-1">
               LAKSHYA
             </h1>
           </div>
-          <div className="mt-6 space-y-2">
-            <p className="text-3xl md:text-4xl text-foreground/95 font-bold tracking-wide">
+          <div className="mt-4 space-y-1">
+            <p className="text-xl md:text-2xl text-foreground/95 font-bold tracking-wide">
               मनसा वाचा कर्मणा
             </p>
-            <p className="text-sm md:text-base text-muted-foreground italic">
+            <p className="text-xs md:text-sm text-muted-foreground italic">
               In thought, word, and deed
             </p>
           </div>
-          <p className="text-2xl md:text-3xl text-foreground/90 font-semibold tracking-wide mt-6">
+          <p className="text-lg md:text-xl text-foreground/90 font-semibold tracking-wide mt-4">
             Har Haal Me Pana Hai
           </p>
         </div>
 
         {/* Tagline */}
-        <div className="mb-12">
-          <p className="text-xl md:text-2xl text-foreground/80 font-medium mb-2">
+        <div className="mb-8">
+          <p className="text-base md:text-lg text-foreground/80 font-medium mb-1">
             Your Complete SSB Preparation - Absolutely FREE
           </p>
-          <p className="text-base md:text-lg text-muted-foreground">
+          <p className="text-sm md:text-base text-muted-foreground">
             Join thousands of aspirants who've turned their dreams into reality
           </p>
         </div>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
           <Button 
             size="lg" 
-            className="bg-primary hover:bg-primary-glow text-lg px-8 py-6 shadow-glow transition-all duration-300 hover:scale-105"
+            className="bg-primary hover:bg-primary-glow text-base px-6 py-5 shadow-glow transition-all duration-300 hover:scale-105"
             onClick={() => document.getElementById('study-materials')?.scrollIntoView({ behavior: 'smooth' })}
           >
             Access Study Materials
@@ -127,7 +143,7 @@ const Hero = () => {
           <Button 
             size="lg" 
             variant="outline"
-            className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground text-lg px-8 py-6 transition-all duration-300 hover:scale-105"
+            className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground text-base px-6 py-5 transition-all duration-300 hover:scale-105
             onClick={() => document.getElementById('ai-psych-analyzer')?.scrollIntoView({ behavior: 'smooth' })}
           >
             Try AI PSYCH Analyzer
