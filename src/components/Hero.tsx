@@ -37,7 +37,7 @@ const Hero = () => {
             audioRef.current.currentTime = 0;
             setIsPlaying(false);
           }
-        }, 10000);
+        }, 15000);
       } catch (error) {
         console.log("Audio autoplay blocked:", error);
       }
@@ -76,7 +76,7 @@ const Hero = () => {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             opacity: currentImageIndex === index ? 0.8 : 0,
-            filter: 'blur(5px)',
+            filter: 'blur(1.5px)',
           }}
         />
       ))}
