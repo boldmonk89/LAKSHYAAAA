@@ -40,8 +40,8 @@ const Navigation = () => {
           </div>
 
           {/* Desktop Navigation - Scrollable */}
-          <div className="hidden md:flex items-center overflow-x-auto scrollbar-hide max-w-3xl">
-            <div className="flex items-center space-x-1">
+          <div className="hidden md:flex items-center overflow-x-auto scrollbar-hide max-w-3xl overflow-y-hidden">
+            <div className="flex items-center space-x-1 pb-1">
               {navItems.map((item) => (
                 <Button
                   key={item.id}

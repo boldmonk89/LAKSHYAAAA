@@ -131,11 +131,11 @@ const SSBTipsCarousel = () => {
     <section
       ref={sectionRef}
       id="ssb-tips"
-      className={`py-20 px-4 relative scroll-fade-up ${isVisible ? 'visible' : ''}`}
+      className={`relative py-20 px-4 scroll-fade-up ${isVisible ? 'visible' : ''}`}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background pointer-events-none z-0" />
       
-      <div className="container mx-auto max-w-6xl relative z-10">
+      <div className="relative z-20 container mx-auto max-w-6xl">
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">

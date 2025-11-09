@@ -11,6 +11,7 @@ import {
   Video,
   MapPin,
   Users,
+  Sparkles,
 } from "lucide-react";
 
 type Item = { id: string; label: string; icon?: JSX.Element };
@@ -19,11 +20,17 @@ const ITEMS: Item[] = [
   { id: "hero",               label: "Home",               icon: <Home size={18} /> },
   { id: "what-ssb-demands",   label: "What SSB Demands",   icon: <Target size={18} /> },
   { id: "study-materials",    label: "Study Materials",    icon: <BookOpen size={18} /> },
-  { id: "defence-links",      label: "Defence Links",      icon: <LinkIcon size={18} /> },
-  { id: "ai-psych-analyzer",  label: "AI Psych Analyzer",  icon: <Brain size={18} /> },
+  { id: "defence-forces",     label: "Defence Forces",     icon: <LinkIcon size={18} /> },
+  { id: "ai-psych-analyzer",  label: "AI PSYCH Analyzer",  icon: <Brain size={18} /> },
+  { id: "piq-analyzer",       label: "PIQ Analyzer",       icon: <Target size={18} /> },
+  { id: "ai-chatbot",         label: "Major AI Sharma",    icon: <Brain size={18} /> },
   { id: "video-resources",    label: "Video Resources",    icon: <Video size={18} /> },
-  { id: "board-locations",    label: "Board Locations",    icon: <MapPin size={18} /> },
-  { id: "ssb-communities",    label: "SSB Communities",    icon: <Users size={18} /> },
+  { id: "ssb-boards",         label: "SSB Boards",         icon: <MapPin size={18} /> },
+  { id: "parents-inspiration", label: "Parents",           icon: <Users size={18} /> },
+  { id: "journey-timeline",   label: "Journey",            icon: <Target size={18} /> },
+  { id: "communities",        label: "Communities",        icon: <Users size={18} /> },
+  { id: "motivation",         label: "Motivation",         icon: <Sparkles size={18} /> },
+  { id: "contact",            label: "Contact",            icon: <Home size={18} /> },
 ];
 
 export default function FloatingMenu() {

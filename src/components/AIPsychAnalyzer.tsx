@@ -35,17 +35,31 @@ const AIPsychAnalyzer = () => {
   const [analysis, setAnalysis] = useState<PsychAnalysis | null>(null);
   const [activeTest, setActiveTest] = useState<'tat' | 'wat' | 'srt'>('tat');
   const [currentTatImage, setCurrentTatImage] = useState(0);
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [uploadedPiqImage, setUploadedPiqImage] = useState<File | null>(null);
+  const [uploadedStoryImage, setUploadedStoryImage] = useState<File | null>(null);
   const [analyzeInHindi, setAnalyzeInHindi] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const storyInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handlePiqImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setUploadedFile(file);
+      setUploadedPiqImage(file);
       toast({
-        title: "File Uploaded",
+        title: "PIQ Image Uploaded",
+        description: `${file.name} ready for analysis`,
+      });
+    }
+  };
+
+  const handleStoryImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setUploadedStoryImage(file);
+      toast({
+        title: "Story Image Uploaded",
         description: `${file.name} ready for analysis`,
       });
     }
@@ -54,10 +68,10 @@ const AIPsychAnalyzer = () => {
   const handleAnalyze = async () => {
     const content = activeTest === 'tat' ? tatStory : activeTest === 'wat' ? watWord : srtSituation;
     
-    if (!content.trim() && !uploadedFile) {
+    if (!content.trim() && !uploadedPiqImage && !uploadedStoryImage) {
       toast({
         title: "Input Required",
-        description: `Please write your ${activeTest.toUpperCase()} response or upload a file.`,
+        description: `Please write your ${activeTest.toUpperCase()} response or upload images.`,
         variant: "destructive",
       });
       return;
@@ -178,14 +192,14 @@ const AIPsychAnalyzer = () => {
               {activeTest === 'srt' && 'SRT Response'}
             </h3>
 
-            <Tabs defaultValue="type" className="mb-4">
-              <TabsList className="grid w-full grid-cols-2 mb-4">
-                <TabsTrigger value="type">Type</TabsTrigger>
-                <TabsTrigger value="upload">Upload</TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="type">
-                {activeTest === 'tat' && (
+            {activeTest === 'tat' ? (
+              <Tabs defaultValue="type" className="mb-4">
+                <TabsList className="grid w-full grid-cols-2 mb-4">
+                  <TabsTrigger value="type">Type Story</TabsTrigger>
+                  <TabsTrigger value="upload">Upload PIQ & Story</TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="type">
                   <div className="mb-4">
                     <div className="flex items-center justify-between mb-2">
                       <img 
@@ -213,77 +227,108 @@ const AIPsychAnalyzer = () => {
                       {tatStory.split(/\s+/).filter(w => w).length}/500 words
                     </p>
                   </div>
-                )}
+                </TabsContent>
+
+                <TabsContent value="upload">
+                  <div className="space-y-4">
+                    <div className="border-2 border-dashed border-primary/30 rounded-lg p-6 text-center">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handlePiqImageUpload}
+                        className="hidden"
+                        id="piq-upload"
+                      />
+                      <Upload className="w-12 h-12 text-primary mx-auto mb-4" />
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Upload PIQ Image
+                      </p>
+                      <label htmlFor="piq-upload">
+                        <Button variant="outline" asChild>
+                          <span className="cursor-pointer">Choose PIQ Image</span>
+                        </Button>
+                      </label>
+                      {uploadedPiqImage && (
+                        <p className="text-sm text-primary mt-2">
+                          Uploaded: {uploadedPiqImage.name}
+                        </p>
+                      )}
+                    </div>
+                    
+                    <div className="border-2 border-dashed border-primary/30 rounded-lg p-6 text-center">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleStoryImageUpload}
+                        className="hidden"
+                        id="story-upload"
+                      />
+                      <Upload className="w-12 h-12 text-primary mx-auto mb-4" />
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Upload Handwritten Story Image
+                      </p>
+                      <label htmlFor="story-upload">
+                        <Button variant="outline" asChild>
+                          <span className="cursor-pointer">Choose Story Image</span>
+                        </Button>
+                      </label>
+                      {uploadedStoryImage && (
+                        <p className="text-sm text-primary mt-2">
+                          Uploaded: {uploadedStoryImage.name}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </TabsContent>
+              </Tabs>
+            ) : (
+              <div className="mb-4">
 
                 {activeTest === 'wat' && (
-                  <div className="mb-4">
+                  <div>
                     <p className="text-sm text-yellow-500 mb-3 bg-yellow-500/10 p-3 rounded border border-yellow-500/30">
-                      ⚠️ SSB Tip: Keep your response to 5-6 words max (you get only 15 seconds in SSB!)
+                      ⚠️ SSB Tip: Write observational sentences (5-6 words max). Never use I, We, They, He, She!
                     </p>
                     <p className="text-sm text-muted-foreground mb-3">
-                      Example word: <span className="text-primary font-semibold">DISCIPLINE</span>
+                      Example word: <span className="text-primary font-semibold">DISCIPLINE</span><br />
+                      ✅ CORRECT: "Discipline builds strong character"<br />
+                      ❌ WRONG: "I think discipline is important"
                     </p>
                     <Textarea
                       value={watWord}
                       onChange={(e) => setWatWord(e.target.value)}
-                      placeholder="Write your sentence using the word (e.g., Discipline builds strong soldiers)..."
+                      placeholder="Type your word and observational sentence (e.g., Courage overcomes fear)..."
                       className="bg-background/50 min-h-[150px]"
                     />
                     <p className="text-xs text-muted-foreground mt-2">
-                      {watWord.split(/\s+/).filter(w => w).length}/500 words
+                      {watWord.split(/\s+/).filter(w => w).length} words
                     </p>
                   </div>
                 )}
 
                 {activeTest === 'srt' && (
-                  <div className="mb-4">
+                  <div>
                     <p className="text-sm text-yellow-500 mb-3 bg-yellow-500/10 p-3 rounded border border-yellow-500/30">
-                      ⚠️ SSB Tip: Give a detailed 1-2 line answer so psychologist clearly understands your thought process
+                      ⚠️ SSB Tip: Write action-oriented response. Use "I will..." to show initiative!
                     </p>
                     <p className="text-sm text-muted-foreground mb-3">
-                      Example situation: <span className="text-primary font-semibold">You find your friend cheating in exam</span>
+                      Example: <span className="text-primary font-semibold">Friend cheating in exam</span><br />
+                      ✅ CORRECT: "I will politely refuse and explain importance of exam ethics"<br />
+                      ❌ WRONG: "I will wait and see what happens"
                     </p>
                     <Textarea
                       value={srtSituation}
                       onChange={(e) => setSrtSituation(e.target.value)}
-                      placeholder="Write how you would react to this situation..."
+                      placeholder="Type the situation and your response (e.g., I will immediately...)..."
                       className="bg-background/50 min-h-[150px]"
                     />
                     <p className="text-xs text-muted-foreground mt-2">
-                      {srtSituation.split(/\s+/).filter(w => w).length}/500 words
+                      {srtSituation.split(/\s+/).filter(w => w).length} words
                     </p>
                   </div>
                 )}
-              </TabsContent>
-
-              <TabsContent value="upload">
-                <div className="border-2 border-dashed border-primary/30 rounded-lg p-8 text-center">
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*,.pdf,.doc,.docx"
-                    onChange={handleFileUpload}
-                    className="hidden"
-                  />
-                  <Upload className="w-12 h-12 text-primary mx-auto mb-4" />
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Upload your handwritten {activeTest.toUpperCase()} response or typed document
-                  </p>
-                  <Button
-                    variant="outline"
-                    onClick={() => fileInputRef.current?.click()}
-                    className="mb-2"
-                  >
-                    Choose File
-                  </Button>
-                  {uploadedFile && (
-                    <p className="text-sm text-primary mt-2">
-                      Uploaded: {uploadedFile.name}
-                    </p>
-                  )}
-                </div>
-              </TabsContent>
-            </Tabs>
+              </div>
+            )}
 
             <div className="flex items-center gap-2 mb-4">
               <input
