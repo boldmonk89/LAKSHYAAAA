@@ -20,7 +20,7 @@ import Loader from "@/components/Loader";
 import SSBTipsCarousel from "@/components/SSBTipsCarousel";
 import ScrollToTop from "@/components/ScrollToTop";
 import ScrollProgress from "@/components/ScrollProgress";
-
+import FounderMessage from "@/components/FounderMessage";
 
 
 const Index = () => {
@@ -58,6 +58,7 @@ const Index = () => {
       <Telegram />
       <Motivation />
       <SSBTipsCarousel />
+      <FounderMessage />
       <Contact />
       <Footer />
     </main>
