@@ -17,10 +17,16 @@ const Navigation = () => {
     { label: "Home", id: "hero" },
     { label: "What SSB Demands", id: "what-ssb-demands" },
     { label: "Study Materials", id: "study-materials" },
+    { label: "Defence Forces", id: "defence-forces" },
     { label: "AI PSYCH Analyzer", id: "ai-psych-analyzer" },
-    { label: "Communities", id: "communities" },
+    { label: "PIQ Analyzer", id: "piq-analyzer" },
+    { label: "Major AI Sharma", id: "ai-chatbot" },
     { label: "Video Resources", id: "video-resources" },
     { label: "SSB Boards", id: "ssb-boards" },
+    { label: "Parents", id: "parents-inspiration" },
+    { label: "Journey", id: "journey-timeline" },
+    { label: "Communities", id: "communities" },
+    { label: "Motivation", id: "motivation" },
     { label: "Contact", id: "contact" },
   ];
 
@@ -33,18 +39,20 @@ const Navigation = () => {
             <h1 className="text-2xl font-bold text-gradient">LAKSHYA</h1>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
-            {navItems.map((item) => (
-              <Button
-                key={item.id}
-                variant="ghost"
-                onClick={() => scrollToSection(item.id)}
-                className="text-foreground/80 hover:text-primary hover:bg-primary/10 transition-colors"
-              >
-                {item.label}
-              </Button>
-            ))}
+          {/* Desktop Navigation - Scrollable */}
+          <div className="hidden md:flex items-center overflow-x-auto scrollbar-hide max-w-3xl">
+            <div className="flex items-center space-x-1">
+              {navItems.map((item) => (
+                <Button
+                  key={item.id}
+                  variant="ghost"
+                  onClick={() => scrollToSection(item.id)}
+                  className="text-foreground/80 hover:text-primary hover:bg-primary/10 transition-colors whitespace-nowrap flex-shrink-0"
+                >
+                  {item.label}
+                </Button>
+              ))}
+            </div>
           </div>
 
           {/* Mobile Menu Button */}

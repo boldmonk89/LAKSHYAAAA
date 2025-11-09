@@ -8,6 +8,8 @@ import ParentsInspiration from "@/components/ParentsInspiration";
 import DefenceForces from "@/components/DefenceForces";
 import JourneyTimeline from "@/components/JourneyTimeline";
 import AIPsychAnalyzer from "@/components/AIPsychAnalyzer";
+import PiqAnalyzer from "@/components/PiqAnalyzer";
+import AIChatbot from "@/components/AIChatbot";
 import VideoResources from "@/components/VideoResources";
 import SSBBoards from "@/components/SSBBoards";
 import Telegram from "@/components/Telegram";
@@ -17,7 +19,6 @@ import Footer from "@/components/Footer";
 import Loader from "@/components/Loader";
 import SSBTipsCarousel from "@/components/SSBTipsCarousel";
 import ScrollToTop from "@/components/ScrollToTop";
-import TelegramFAB from "@/components/TelegramFAB";
 import ScrollProgress from "@/components/ScrollProgress";
 
 
@@ -48,15 +49,16 @@ const Index = () => {
       <StudyMaterials />
       <DefenceForces />
       <AIPsychAnalyzer />
+      <PiqAnalyzer />
+      <AIChatbot />
       <VideoResources />
       <SSBBoards />
       <ParentsInspiration />
       <JourneyTimeline />
       <Telegram />
       <Motivation />
-      <Contact />
       <SSBTipsCarousel />
-      <TelegramFAB />
+      <Contact />
       <Footer />
     </main>
   );

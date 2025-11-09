@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/button";
-import imaImage from "@/assets/ima-dehradun.jpg";
-import ndaImage from "@/assets/nda-building.jpg";
-import lakshyaImage from "@/assets/lakshya-hero.jpg";
-import cadetsImage from "@/assets/cadets-celebration.jpg";
+import nda3 from "@/assets/nda-3.jpg";
+import lakshya2 from "@/assets/lakshya-2.jpg";
+import imaParade from "@/assets/ima-parade.jpeg";
+import forcesEmblem from "@/assets/forces-emblem.jpeg";
+import youBelongHere from "@/assets/you-belong-here.jpeg";
+import majMohit from "@/assets/maj-mohit-sharma.jpeg";
+import imaDehradun from "@/assets/ima-dehradun-3.jpg";
 import { useEffect, useRef, useState } from "react";
 
 const Hero = () => {
@@ -12,7 +15,7 @@ const Hero = () => {
   const fadeIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Carousel state
-  const heroImages = [imaImage, ndaImage, lakshyaImage, cadetsImage];
+  const heroImages = [nda3, lakshya2, imaParade, forcesEmblem, youBelongHere, majMohit, imaDehradun];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {

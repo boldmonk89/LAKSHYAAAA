@@ -113,33 +113,6 @@ Provide analysis in this JSON format:
   "recommendation": "Overall feedback..."
 }`;
     }
-     const messages: any[] = [
-      { role: "system", content: systemPrompt },
-    ];
-
-    // If there's an image (handwritten story or TAT picture), include it
-    if (imageData) {
-      messages.push({
-        role: "user",
-        content: [
-          {
-            type: "text",
-            text: story ? `Please analyze this ${testType} response: ${story}` : `Please analyze the ${testType} response shown in this image.`
-          },
-          {
-            type: "image_url",
-            image_url: {
-              url: imageData
-            }
-          }
-        ]
-      });
-    } else {
-      messages.push({
-        role: "user",
-        content: `Please analyze this ${testType} response: ${story}`
-      });
-    }
     
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',

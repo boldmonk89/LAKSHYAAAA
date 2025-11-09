@@ -2,3 +2,9 @@ project_id = "zzhgbypdlhjjccxsobqp"
 
 [functions.analyze-psych]
 verify_jwt = false
+
+[functions.ai-chat]
+verify_jwt = false
+
+[functions.analyze-piq]
+verify_jwt = false
