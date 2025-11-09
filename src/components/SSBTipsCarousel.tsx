@@ -131,9 +131,9 @@ const SSBTipsCarousel = () => {
     <section
       ref={sectionRef}
       id="ssb-tips"
-      className={`relative py-20 px-4 scroll-fade-up ${isVisible ? 'visible' : ''}`}
+      className={`relative z-30 isolate py-20 px-4 scroll-fade-up ${isVisible ? 'visible' : ''}`}
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background pointer-events-none z-10" />
       
       <div className="relative z-20 container mx-auto max-w-6xl">
         {/* Header */}
