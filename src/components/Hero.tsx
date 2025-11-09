@@ -76,7 +76,7 @@ const Hero = () => {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             opacity: currentImageIndex === index ? 0.8 : 0,
-            filter: 'blur(1.5px)',
+            filter: 'blur(0.5px)',
           }}
         />
       ))}
