@@ -36,7 +36,7 @@ const Index = () => {
   }
 
   return (
-    <main className="min-h-screen">
+    <main className="isolate min-h-screen">
       <ScrollProgress />
       <ScrollToTop />
       <Navigation />
