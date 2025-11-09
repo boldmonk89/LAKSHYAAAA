@@ -88,7 +88,7 @@ const Hero = () => {
   }, [heroImages.length]);
 
   return (
-    <section ref={heroRef} id="hero" className="relative min-h-screen flex items-center overflow-hidden pt-16 bg-black">
+    <section ref={heroRef} id="hero" className="relative min-h-screen flex items-center overflow-hidden pt-16">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Video - Left Side */}
@@ -103,24 +103,12 @@ const Hero = () => {
               <source src="/hero-video.mp4" type="video/mp4" />
             </video>
             
-            {/* Military Pattern Overlay */}
-            <div className="absolute inset-0 opacity-10" style={{
-              backgroundImage: `repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 10px,
-                rgba(139, 69, 19, 0.1) 10px,
-                rgba(139, 69, 19, 0.1) 20px
-              )`
-            }} />
-          </div>
-
           {/* Content - Right Side */}
           <div className="text-center lg:text-left animate-fade-in">
             {/* Lakshya with golden background */}
-            <div className="mb-6">
-              <div className="inline-block px-6 py-3 rounded-2xl glass-premium">
-                <h1 className="text-4xl md:text-5xl font-bold text-gradient glow mb-1">
+            <div className="mb-8">
+              <div className="inline-block px-8 py-4 rounded-2xl glass-premium">
+                <h1 className="text-4xl md:text-5xl font-bold text-gradient glow mb-2">
                   LAKSHYA
                 </h1>
               </div>
