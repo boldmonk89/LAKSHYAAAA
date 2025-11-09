@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import { Lightbulb, Target, Brain, Heart, Shield, Star } from "lucide-react";
 import ndaBackground from "@/assets/nda-background.jpg";
+import Autoplay from "embla-carousel-autoplay";
 
 const tips = [
   {
