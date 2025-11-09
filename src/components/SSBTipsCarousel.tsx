@@ -86,6 +86,11 @@ const SSBTipsCarousel = () => {
               align: "start",
               loop: true,
             }}
+             plugins={[
+              Autoplay({
+                delay: 3000,
+              }),
+            ]}
             className="w-full"
           >
             <CarouselContent>
