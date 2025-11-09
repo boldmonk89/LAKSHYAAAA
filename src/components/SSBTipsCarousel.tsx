@@ -98,7 +98,7 @@ const tips: Tip[] = [
 const SSBTipsCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const { ref: sectionRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { ref: sectionRef, inview: isVisible } = useScrollAnimation({ threshold: 0.2 });
 
   useEffect(() => {
     if (!isAutoPlaying) return;
