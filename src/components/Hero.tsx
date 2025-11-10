@@ -100,7 +100,7 @@ const Hero = () => {
   }, [heroImages.length]);
 
   return (
-    <section ref={heroRef} id="hero" className="relative z-10 min-h-screen flex items-center overflow-hidden pt-16 bg-black">
+    <section ref={heroRef} id="hero" className="relative z-20 min-h-screen flex items-center overflow-hidden pt-16 bg-black/0">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Video - Left Side */}
@@ -110,13 +110,13 @@ const Hero = () => {
               autoPlay
               loop
               playsInline
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-cover z-[1]"
             >
               <source src="/hero-video.mp4" type="video/mp4" />
             </video>
             
             {/* Military Pattern Overlay */}
-            <div className="absolute inset-0 opacity-10" style={{
+            <div className="absolute inset-0 opacity-[0.06] pointer-events-none z-0" style={{
               backgroundImage: `repeating-linear-gradient(
                 45deg,
                 transparent,
@@ -128,7 +128,7 @@ const Hero = () => {
           </div>
 
           {/* Content - Right Side */}
-          <div className="text-center lg:text-left animate-fade-in opacity-100">
+          <div className="relative z-[2] text-center lg:text-left animate-none">
             {/* Lakshya with golden background */}
             <div className="mb-6">
               <div className="inline-block px-6 py-3 rounded-2xl glass-premium">
