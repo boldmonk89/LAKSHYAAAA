@@ -110,13 +110,13 @@ const Hero = () => {
               autoPlay
               loop
               playsInline
-              className="absolute inset-0 w-full h-full object-cover z-0"
+              className="absolute inset-0 w-full h-full object-cover"
             >
               <source src="/hero-video.mp4" type="video/mp4" />
             </video>
             
             {/* Military Pattern Overlay */}
-            <div className="absolute inset-0 opacity-10 pointer-events-none z-10" style={{
+            <div className="absolute inset-0 opacity-10" style={{
               backgroundImage: `repeating-linear-gradient(
                 45deg,
                 transparent,
