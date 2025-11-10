@@ -13,24 +13,47 @@ const Hero = () => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const fadeIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Carousel state
   const heroImages = [nda3, lakshya2, imaParade, forcesEmblem, youBelongHere, majMohit, imaDehradun];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  useEffect(() => {
-   // Unmute and set video volume after mount
-    if (videoRef.current) {
-      videoRef.current.muted = false;
-      videoRef.current.volume = 0.5;
+  // Play audio on first user interaction
+  const playAudioOnInteraction = async () => {
+    if (audioRef.current && !isPlaying && !hasInteracted) {
+      setHasInteracted(true);
+      try {
+        await audioRef.current.play();
+        setIsPlaying(true);
+        
+        // Unmute video after user interaction
+        if (videoRef.current) {
+          videoRef.current.muted = false;
+          videoRef.current.volume = 0.5;
+        }
+        
+        // Stop audio after 15 seconds
+        setTimeout(() => {
+          if (audioRef.current) {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0;
+            setIsPlaying(false);
+          }
+        }, 15000);
+      } catch (error) {
+        console.log("Audio playback failed:", error);
+      }
     }
+  };
 
-    // Scroll detection to mute video when out of view
+  useEffect(() => {
+    // Scroll detection to adjust video volume when out of view
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (videoRef.current) {
-         if (entry.isIntersecting) {
+        if (videoRef.current && hasInteracted) {
+          if (entry.isIntersecting) {
             videoRef.current.muted = false;
             videoRef.current.volume = 0.5;
           } else {
@@ -46,31 +69,24 @@ const Hero = () => {
       observer.observe(heroRef.current);
     }
 
-    // Create audio - using lakshya intro
+    // Create audio - prepare but don't play yet
     audioRef.current = new Audio("/intro.mp3");
     audioRef.current.loop = false;
     audioRef.current.volume = 0.5;
-    
-    // Play for 5 seconds then stop
-    const playAudio = async () => {
-      try {
-        await audioRef.current?.play();
-        setIsPlaying(true);
-        
-        // Stop after 5 seconds
-        setTimeout(() => {
-          if (audioRef.current) {
-            audioRef.current.pause();
-            audioRef.current.currentTime = 0;
-            setIsPlaying(false);
-          }
-        }, 15000);
-      } catch (error) {
-        console.log("Audio autoplay blocked:", error);
-      }
+    audioRef.current.load();
+
+    // Set up one-time event listeners for user interaction
+    const handleFirstInteraction = () => {
+      playAudioOnInteraction();
+      // Remove listeners after first interaction
+      document.removeEventListener('click', handleFirstInteraction);
+      document.removeEventListener('keydown', handleFirstInteraction);
+      document.removeEventListener('touchstart', handleFirstInteraction);
     };
 
-    playAudio();
+    document.addEventListener('click', handleFirstInteraction, { once: true });
+    document.addEventListener('keydown', handleFirstInteraction, { once: true });
+    document.addEventListener('touchstart', handleFirstInteraction, { once: true });
 
     // Image carousel - change every 5 seconds
     const carouselInterval = setInterval(() => {
@@ -79,12 +95,12 @@ const Hero = () => {
 
     // Handle scroll for video volume
     const handleScroll = () => {
-      if (heroRef.current && videoRef.current) {
+      if (heroRef.current && videoRef.current && hasInteracted) {
         const heroBottom = heroRef.current.getBoundingClientRect().bottom;
         if (heroBottom <= 0) {
           videoRef.current.volume = 0;
         } else {
-          videoRef.current.volume = 0.05; // 5% volume
+          videoRef.current.volume = 0.5;
         }
       }
     };
@@ -95,6 +111,9 @@ const Hero = () => {
     return () => {
       clearInterval(carouselInterval);
       window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('click', handleFirstInteraction);
+      document.removeEventListener('keydown', handleFirstInteraction);
+      document.removeEventListener('touchstart', handleFirstInteraction);
       if (fadeIntervalRef.current) {
         clearInterval(fadeIntervalRef.current);
       }
@@ -104,7 +123,7 @@ const Hero = () => {
       }
       observer.disconnect();
     };
-  }, [heroImages.length]);
+  }, [heroImages.length, hasInteracted]);
 
   return (
     <section ref={heroRef} id="hero" className="relative z-20 min-h-screen flex items-center overflow-hidden pt-16">
@@ -116,6 +135,7 @@ const Hero = () => {
               ref={videoRef}
               autoPlay
               loop
+              muted
               playsInline
               className="absolute inset-0 w-full h-full object-cover z-10"
             >
@@ -170,7 +190,7 @@ const Hero = () => {
                 className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground text-base px-6 py-5 transition-all duration-300 hover:scale-105"
                 onClick={() => document.getElementById('tat-analyzer')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                Try AI TAT Analyzer
+                Try AI Psych Analyzer
               </Button>
             </div>
           </div>
@@ -181,4 +201,3 @@ const Hero = () => {
 };
 
 export default Hero;
-
