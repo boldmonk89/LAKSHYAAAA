@@ -107,7 +107,7 @@ const Hero = () => {
   }, [heroImages.length]);
 
   return (
-    <section ref={heroRef} id="hero" className="relative z-20 min-h-screen flex items-center overflow-hidden pt-16 bg-black/0">
+    <section ref={heroRef} id="hero" className="relative z-20 min-h-screen flex items-center overflow-hidden pt-16 bg-black/">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Video - Left Side */}
@@ -118,7 +118,7 @@ const Hero = () => {
               muted
               loop
               playsInline
-              className="absolute inset-0 w-full h-full object-cover z-[1]"
+              className="absolute inset-0 w-full h-full object-cover z-10"
             >
               <source src="/hero-video.mp4" type="video/mp4" />
             </video>
