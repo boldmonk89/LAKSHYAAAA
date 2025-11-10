@@ -20,8 +20,9 @@ const Hero = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
-     // Set video volume
+   // Unmute and set video volume after mount
     if (videoRef.current) {
+      videoRef.current.muted = false;
       videoRef.current.volume = 0.5;
     }
 
@@ -29,7 +30,13 @@ const Hero = () => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (videoRef.current) {
-          videoRef.current.volume = entry.isIntersecting ? 0.5 : 0;
+         if (entry.isIntersecting) {
+            videoRef.current.muted = false;
+            videoRef.current.volume = 0.5;
+          } else {
+            videoRef.current.volume = 0;
+            videoRef.current.muted = true;
+          }
         }
       },
       { threshold: 0.3 }
@@ -108,23 +115,13 @@ const Hero = () => {
             <video
               ref={videoRef}
               autoPlay
+              muted
               loop
               playsInline
               className="absolute inset-0 w-full h-full object-cover z-[1]"
             >
               <source src="/hero-video.mp4" type="video/mp4" />
             </video>
-            
-            {/* Military Pattern Overlay */}
-            <div className="absolute inset-0 opacity-[0.06] pointer-events-none z-0" style={{
-              backgroundImage: `repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 10px,
-                rgba(139, 69, 19, 0.1) 10px,
-                rgba(139, 69, 19, 0.1) 20px
-              )`
-            }} />
           </div>
 
           {/* Content - Right Side */}
