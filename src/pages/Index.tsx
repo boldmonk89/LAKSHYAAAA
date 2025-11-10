@@ -28,6 +28,8 @@ const Index = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 2000);
+    // Scroll to top on load
+    window.scrollTo(0, 0);
     return () => clearTimeout(timer);
   }, []);
 
