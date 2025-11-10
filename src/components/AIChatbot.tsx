@@ -15,15 +15,17 @@ const AIChatbot = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Namaste! Main Major AI Sharma hoon. Aap mujhse defence forces, SSB preparation, Officer Like Qualities ya koi bhi sawaal pooch sakte hain. Main aapki madad ke liye yahan hoon!"
-    }
+      content:
+        "Namaste! Main Major AI Sharma hoon. Aap mujhse defence forces, SSB preparation, Officer Like Qualities ya koi bhi sawaal pooch sakte hain. Main aapki madad ke liye yahan hoon!",
+    },
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const list = listRef.current;
+    if (list) list.scrollTop = list.scrollHeight;
   };
 
   useEffect(() => {
@@ -35,26 +37,26 @@ const AIChatbot = () => {
     if (!input.trim() || isLoading) return;
 
     const userMessage: Message = { role: "user", content: input };
-    setMessages(prev => [...prev, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke('ai-chat', {
-        body: { 
-          messages: [...messages, userMessage]
-        }
+      const { data, error } = await supabase.functions.invoke("ai-chat", {
+        body: {
+          messages: [...messages, userMessage],
+        },
       });
 
       if (error) throw error;
 
       const assistantMessage: Message = {
         role: "assistant",
-        content: data.response
+        content: data.response,
       };
-      setMessages(prev => [...prev, assistantMessage]);
+      setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
       toast.error("Failed to get response. Please try again.");
     } finally {
       setIsLoading(false);
@@ -77,19 +79,15 @@ const AIChatbot = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="p-6">
-            <div className="space-y-4 mb-4 h-[400px] overflow-y-auto pr-2">
+            <div ref={listRef} className="space-y-4 mb-4 h-[400px] overflow-y-auto pr-2">
               {messages.map((message, index) => (
                 <div
                   key={index}
-                  className={`flex gap-3 ${
-                    message.role === "assistant" ? "" : "flex-row-reverse"
-                  }`}
+                  className={`flex gap-3 ${message.role === "assistant" ? "" : "flex-row-reverse"}`}
                 >
                   <div
                     className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
-                      message.role === "assistant"
-                        ? "bg-primary/10"
-                        : "bg-accent/10"
+                      message.role === "assistant" ? "bg-primary/10" : "bg-accent/10"
                     }`}
                   >
                     {message.role === "assistant" ? (
@@ -100,14 +98,10 @@ const AIChatbot = () => {
                   </div>
                   <div
                     className={`flex-1 p-4 rounded-lg ${
-                      message.role === "assistant"
-                        ? "bg-secondary/50"
-                        : "bg-primary/10"
+                      message.role === "assistant" ? "bg-secondary/50" : "bg-primary/10"
                     }`}
                   >
-                    <p className="text-sm leading-relaxed whitespace-pre-wrap">
-                      {message.content}
-                    </p>
+                    <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
                   </div>
                 </div>
               ))}
@@ -125,7 +119,6 @@ const AIChatbot = () => {
                   </div>
                 </div>
               )}
-              <div ref={messagesEndRef} />
             </div>
             <form onSubmit={handleSubmit} className="flex gap-2">
               <Textarea
@@ -134,18 +127,13 @@ const AIChatbot = () => {
                 placeholder="Ask anything about defence forces, SSB, OLQs, or general questions..."
                 className="min-h-[80px]"
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
+                  if (e.key === "Enter" && !e.shiftKey) {
                     e.preventDefault();
                     handleSubmit(e);
                   }
                 }}
               />
-              <Button
-                type="submit"
-                size="icon"
-                className="h-[80px] w-[80px]"
-                disabled={isLoading || !input.trim()}
-              >
+              <Button type="submit" size="icon" className="h-[80px] w-[80px]" disabled={isLoading || !input.trim()}>
                 <Send className="w-5 h-5" />
               </Button>
             </form>
