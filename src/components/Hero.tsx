@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 
 const Hero = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const fadeIntervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -50,10 +51,24 @@ const Hero = () => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
     }, 5000);
 
+    // Handle scroll for video volume
+    const handleScroll = () => {
+      if (heroRef.current && videoRef.current) {
+        const heroBottom = heroRef.current.getBoundingClientRect().bottom;
+        if (heroBottom <= 0) {
+          videoRef.current.volume = 0;
+        } else {
+          videoRef.current.volume = 0.05; // 5% volume
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
 
     // Cleanup
     return () => {
       clearInterval(carouselInterval);
+      window.removeEventListener('scroll', handleScroll);
       if (fadeIntervalRef.current) {
         clearInterval(fadeIntervalRef.current);
       }
@@ -66,7 +81,7 @@ const Hero = () => {
 
   return (
     <section ref={heroRef} id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-  {/* Background Image Carousel */}
+      {/* Background Image Carousel */}
       {heroImages.map((image, index) => (
         <div
           key={index}
@@ -81,64 +96,85 @@ const Hero = () => {
         />
       ))}
 
-       <div className="absolute inset-0 bg-black/25 z-20" />
+      <div className="absolute inset-0 bg-black/25 z-20" />
       
-      {/* Content */}
-      <div className="relative z-30 text-center px-4 max-w-5xl mx-auto">
-        {/* Lakshya with golden background */}
-        <div className="mb-8">
-          <div className="inline-block px-8 py-4 rounded-2xl glass-premium">
-            <h1 className="text-6xl md:text-8xl font-bold text-gradient glow mb-2">
-              LAKSHYA
-            </h1>
-          </div>
-          <div className="mt-6 space-y-2">
-            <p className="text-3xl md:text-4xl text-foreground/95 font-bold tracking-wide">
-              मनसा वाचा कर्मणा
+      {/* Content Container */}
+      <div className="relative z-30 w-full h-full flex items-center justify-between px-8 max-w-7xl mx-auto gap-8">
+        {/* Left Side - Video */}
+        <div className="w-1/2 flex items-center justify-center">
+          <video
+            ref={videoRef}
+            src="/hero-video.mp4"
+            autoPlay
+            loop
+            muted={false}
+            playsInline
+            className="w-full h-auto rounded-lg shadow-2xl"
+            style={{ maxHeight: '80vh', objectFit: 'cover' }}
+            onLoadedMetadata={(e) => {
+              const video = e.target as HTMLVideoElement;
+              video.volume = 0.05; // Set to 5% volume
+            }}
+          />
+        </div>
+
+        {/* Right Side - Content */}
+        <div className="w-1/2 text-center">
+          {/* Lakshya with golden background */}
+          <div className="mb-6">
+            <div className="inline-block px-6 py-3 rounded-2xl glass-premium">
+              <h1 className="text-5xl md:text-6xl font-bold text-gradient glow mb-2">
+                LAKSHYA
+              </h1>
+            </div>
+            <div className="mt-4 space-y-2">
+              <p className="text-2xl md:text-3xl text-foreground/95 font-bold tracking-wide">
+                मनसा वाचा कर्मणा
+              </p>
+              <p className="text-sm md:text-base text-muted-foreground italic">
+                In thought, word, and deed
+              </p>
+            </div>
+            <p className="text-xl md:text-2xl text-foreground/90 font-semibold tracking-wide mt-4">
+              Har Haal Me Pana Hai
             </p>
-            <p className="text-sm md:text-base text-muted-foreground italic">
-              In thought, word, and deed
+          </div>
+
+          {/* Tagline */}
+          <div className="mb-8">
+            <p className="text-lg md:text-xl text-foreground/80 font-medium mb-2">
+              Your Complete SSB Preparation - Absolutely FREE
+            </p>
+            <p className="text-sm md:text-base text-muted-foreground">
+              Join thousands of aspirants who've turned their dreams into reality
             </p>
           </div>
-          <p className="text-2xl md:text-3xl text-foreground/90 font-semibold tracking-wide mt-6">
-            Har Haal Me Pana Hai
-          </p>
-        </div>
 
-        {/* Tagline */}
-        <div className="mb-12">
-          <p className="text-xl md:text-2xl text-foreground/80 font-medium mb-2">
-            Your Complete SSB Preparation - Absolutely FREE
-          </p>
-          <p className="text-base md:text-lg text-muted-foreground">
-            Join thousands of aspirants who've turned their dreams into reality
-          </p>
-        </div>
-
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Button 
-            size="lg" 
-            className="bg-primary hover:bg-primary-glow text-lg px-8 py-6 shadow-glow transition-all duration-300 hover:scale-105"
-            onClick={() => document.getElementById('study-materials')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            Access Study Materials
-          </Button>
-          <Button 
-            size="lg" 
-            variant="outline"
-            className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground text-lg px-8 py-6 transition-all duration-300 hover:scale-105"
-            onClick={() => document.getElementById('ai-psych-analyzer')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            Try AI PSYCH Analyzer
-          </Button>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-primary rounded-full flex items-start justify-center p-2">
-            <div className="w-1 h-3 bg-primary rounded-full" />
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+            <Button 
+              size="lg" 
+              className="bg-primary hover:bg-primary-glow text-base px-6 py-5 shadow-glow transition-all duration-300 hover:scale-105"
+              onClick={() => document.getElementById('study-materials')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              Access Study Materials
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline"
+              className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground text-base px-6 py-5 transition-all duration-300 hover:scale-105"
+              onClick={() => document.getElementById('ai-psych-analyzer')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              Try AI PSYCH Analyzer
+            </Button>
           </div>
+        </div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce z-30">
+        <div className="w-6 h-10 border-2 border-primary rounded-full flex items-start justify-center p-2">
+          <div className="w-1 h-3 bg-primary rounded-full" />
         </div>
       </div>
     </section>

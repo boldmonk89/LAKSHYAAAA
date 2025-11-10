@@ -9,6 +9,7 @@ import { toast } from "sonner";
 const PiqAnalyzer = () => {
   const [piqDescription, setPiqDescription] = useState("");
   const [image, setImage] = useState<File | null>(null);
+  const [pdf, setPdf] = useState<File | null>(null);
   const [analysis, setAnalysis] = useState<any>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
@@ -18,15 +19,23 @@ const PiqAnalyzer = () => {
     }
   };
 
+  const handlePdfUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setPdf(e.target.files[0]);
+    }
+  };
+
   const handleAnalyze = async () => {
-    if (!piqDescription.trim() && !image) {
-      toast.error("Please provide a PIQ description or upload an image");
+    if (!piqDescription.trim() && !image && !pdf) {
+      toast.error("Please provide a PIQ description, upload an image, or upload a PDF");
       return;
     }
 
     setIsAnalyzing(true);
     try {
       let imageData = null;
+      let pdfData = null;
+      
       if (image) {
         const reader = new FileReader();
         imageData = await new Promise<string>((resolve) => {
@@ -35,10 +44,19 @@ const PiqAnalyzer = () => {
         });
       }
 
+      if (pdf) {
+        const reader = new FileReader();
+        pdfData = await new Promise<string>((resolve) => {
+          reader.onload = () => resolve(reader.result as string);
+          reader.readAsDataURL(pdf);
+        });
+      }
+
       const { data, error } = await supabase.functions.invoke('analyze-piq', {
         body: {
           description: piqDescription,
-          image: imageData
+          image: imageData,
+          pdf: pdfData
         }
       });
 
@@ -88,7 +106,7 @@ const PiqAnalyzer = () => {
 
             <div>
               <label className="block text-sm font-medium mb-2">
-                Or upload a PIQ image (optional)
+                Upload PIQ image (optional)
               </label>
               <div className="flex items-center gap-4">
                 <input
@@ -109,6 +127,34 @@ const PiqAnalyzer = () => {
                 {image && (
                   <span className="text-sm text-muted-foreground">
                     {image.name}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Or upload PIQ PDF (2 pages)
+              </label>
+              <div className="flex items-center gap-4">
+                <input
+                  type="file"
+                  accept="application/pdf"
+                  onChange={handlePdfUpload}
+                  className="hidden"
+                  id="piq-pdf-upload"
+                />
+                <label htmlFor="piq-pdf-upload">
+                  <Button type="button" variant="outline" asChild>
+                    <span className="cursor-pointer">
+                      <Upload className="w-4 h-4 mr-2" />
+                      Upload PDF
+                    </span>
+                  </Button>
+                </label>
+                {pdf && (
+                  <span className="text-sm text-muted-foreground">
+                    {pdf.name}
                   </span>
                 )}
               </div>

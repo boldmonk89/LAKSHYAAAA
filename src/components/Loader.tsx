@@ -34,6 +34,9 @@ const Loader = ({ onComplete }: { onComplete: () => void }) => {
               style={{ width: `${progress}%` }}
             />
           </div>
+          <p className="text-lg text-muted-foreground font-medium">
+            {progress}%
+          </p>
         </div>
       </div>
     </div>

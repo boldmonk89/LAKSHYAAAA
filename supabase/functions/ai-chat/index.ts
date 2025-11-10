@@ -11,7 +11,7 @@ serve(async (req) => {
   }
 
   try {
-    const { message } = await req.json();
+    const { messages } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
 
     if (!LOVABLE_API_KEY) {
@@ -19,6 +19,12 @@ serve(async (req) => {
     }
 
     const systemPrompt = `You are Major AI Sharma, an expert on Indian Defence Forces, SSB preparation, and military career guidance. 
+
+IMPORTANT: Always respond in Hinglish (mix of Hindi and English) by default. Use Hindi words naturally mixed with English. Examples:
+- "Bilkul! Main aapki help kar sakta hoon."
+- "SSB preparation ke liye aapko physical fitness pe focus karna hoga."
+- "OLQs ko develop karne ke liye daily practice zaruri hai."
+
 You provide helpful, accurate, and motivating advice on:
 - SSB (Services Selection Board) preparation
 - Officer Like Qualities (15 OLQs)
@@ -28,7 +34,7 @@ You provide helpful, accurate, and motivating advice on:
 - Interview tips and group tasks
 - General knowledge about defence forces
 
-You can also answer general questions on any topic. Be professional, encouraging, and provide practical advice. Use both English and Hindi when appropriate to connect with candidates.`;
+You can also answer general questions on any topic. Be professional, encouraging, and provide practical advice. Maintain conversation context and refer to previous messages when relevant, just like ChatGPT does.`;
 
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
@@ -40,7 +46,7 @@ You can also answer general questions on any topic. Be professional, encouraging
         model: 'google/gemini-2.5-flash',
         messages: [
           { role: 'system', content: systemPrompt },
-          { role: 'user', content: message }
+          ...messages
         ],
       }),
     });

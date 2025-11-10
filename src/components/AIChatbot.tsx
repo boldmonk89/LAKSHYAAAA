@@ -15,7 +15,7 @@ const AIChatbot = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Namaste! I'm Major AI Sharma. Ask me anything about defence forces, SSB preparation, Officer Like Qualities, or any general questions. मैं आपकी मदद के लिए यहां हूं!"
+      content: "Namaste! Main Major AI Sharma hoon. Aap mujhse defence forces, SSB preparation, Officer Like Qualities ya koi bhi sawaal pooch sakte hain. Main aapki madad ke liye yahan hoon!"
     }
   ]);
   const [input, setInput] = useState("");
@@ -41,7 +41,9 @@ const AIChatbot = () => {
 
     try {
       const { data, error } = await supabase.functions.invoke('ai-chat', {
-        body: { message: input }
+        body: { 
+          messages: [...messages, userMessage]
+        }
       });
 
       if (error) throw error;

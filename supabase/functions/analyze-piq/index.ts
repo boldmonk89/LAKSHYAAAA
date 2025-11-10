@@ -11,7 +11,7 @@ serve(async (req) => {
   }
 
   try {
-    const { description, image } = await req.json();
+    const { description, image, pdf } = await req.json();
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
 
     if (!LOVABLE_API_KEY) {
@@ -37,7 +37,21 @@ Provide analysis in JSON format with:
       { role: "system", content: systemPrompt }
     ];
 
-    if (image) {
+    if (pdf) {
+      messages.push({
+        role: "user",
+        content: [
+          {
+            type: "text",
+            text: description ? `Analyze this 2-page PIQ PDF. Description: ${description}` : "Analyze this 2-page PIQ PDF."
+          },
+          {
+            type: "image_url",
+            image_url: { url: pdf }
+          }
+        ]
+      });
+    } else if (image) {
       messages.push({
         role: "user",
         content: [
