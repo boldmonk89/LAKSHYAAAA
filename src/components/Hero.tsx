@@ -20,8 +20,8 @@ const Hero = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
-    // Create audio
-    audioRef.current = new Audio("/lakshya-theme.mp3");
+    // Create audio - using lakshya intro
+    audioRef.current = new Audio("/intro.mp3");
     audioRef.current.loop = false;
     audioRef.current.volume = 0.5;
     
@@ -99,9 +99,9 @@ const Hero = () => {
       <div className="absolute inset-0 bg-black/25 z-20" />
       
       {/* Content Container */}
-      <div className="relative z-30 w-full h-full flex items-center justify-between px-8 max-w-7xl mx-auto gap-8">
+      <div className="relative z-30 w-full h-full flex items-center justify-between px-8 max-w-[1400px] mx-auto gap-6">
         {/* Left Side - Video */}
-        <div className="w-1/2 flex items-center justify-center">
+        <div className="w-[55%] flex items-center justify-center">
           <video
             ref={videoRef}
             src="/hero-video.mp4"
@@ -110,7 +110,7 @@ const Hero = () => {
             muted={false}
             playsInline
             className="w-full h-auto rounded-lg shadow-2xl"
-            style={{ maxHeight: '80vh', objectFit: 'cover' }}
+            style={{ maxHeight: '85vh', objectFit: 'cover' }}
             onLoadedMetadata={(e) => {
               const video = e.target as HTMLVideoElement;
               video.volume = 0.05; // Set to 5% volume
@@ -119,7 +119,7 @@ const Hero = () => {
         </div>
 
         {/* Right Side - Content */}
-        <div className="w-1/2 text-center">
+        <div className="w-[45%] text-center">
           {/* Lakshya with golden background */}
           <div className="mb-6">
             <div className="inline-block px-6 py-3 rounded-2xl glass-premium">
