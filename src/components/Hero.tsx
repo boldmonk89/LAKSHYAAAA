@@ -107,11 +107,11 @@ const Hero = () => {
   }, [heroImages.length]);
 
   return (
-    <section ref={heroRef} id="hero" className="relative z-20 min-h-screen flex items-center overflow-hidden pt-16 bg-black/">
+    <section ref={heroRef} id="hero" className="relative z-20 min-h-screen flex items-center overflow-hidden pt-16">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Video - Left Side */}
-          <div className="relative h-[400px] lg:h-[600px] rounded-2xl overflow-hidden">
+          <div className="relative h-[400px] lg:h-[600px] rounded-2xl overflow-hidden bg-background">
             <video
               ref={videoRef}
               autoPlay
