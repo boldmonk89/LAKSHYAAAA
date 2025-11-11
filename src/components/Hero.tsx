@@ -92,7 +92,7 @@ const Hero = () => {
                 size="lg" 
                 variant="outline"
                 className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground text-base px-6 py-5 transition-all duration-300 hover:scale-105"
-                onClick={() => document.getElementById('tat-analyzer')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => document.getElementById('ai-psych-analyzer')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 Try AI Psych Analyzer
               </Button>

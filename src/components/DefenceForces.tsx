@@ -30,8 +30,6 @@ const DefenceForces = () => {
 
   return (
     <section id="defence-forces" className="relative isolate z-10 py-24 overflow-hidden">
-      {/* Light glass overlay to keep text readable */}
-      <div className="absolute inset-0 -z-10 pointer-events-none glass" />
       
       <div className="container relative z-[1] mx-auto px-4">
         <div
