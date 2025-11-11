@@ -86,7 +86,7 @@ export default function FloatingMenu() {
       {/* Panel (above Telegram button area) */}
       <div
         ref={panelRef}
-        className={`fixed right-4 bottom-28 sm:bottom-28 z-[110] w-60 origin-bottom-right
+        className={`fixed right-4 bottom-20 sm:bottom-24 z-[110] w-60 origin-bottom-right
           rounded-2xl border border-white/10 bg-black/80 text-white shadow-xl backdrop-blur-md
           transition-all ${open ? "scale-100 opacity-100" : "pointer-events-none scale-95 opacity-0"}`}
         role="menu"
@@ -113,7 +113,7 @@ export default function FloatingMenu() {
         ref={btnRef}
         aria-label={open ? "Close menu" : "Open menu"}
         onClick={() => setOpen((v) => !v)}
-        className="fixed right-4 bottom-10 sm:bottom-16 z-[120] h-12 w-12 rounded-full
+        className="fixed right-4 bottom-4 sm:bottom-6 z-[120] h-12 w-12 rounded-full
                    bg-primary text-black shadow-lg border border-primary/40
                    grid place-items-center hover:brightness-110 active:scale-95 transition"
       >

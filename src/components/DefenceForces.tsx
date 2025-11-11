@@ -29,7 +29,7 @@ const DefenceForces = () => {
   const { ref: cardsRef, isVisible: cardsVisible } = useScrollAnimation({ threshold: 0.2 });
 
   return (
-    <section className="relative isolate z-[60] py-24 overflow-hidden">
+    <section id="defence-forces" className="relative isolate z-10 py-24 overflow-hidden">
       {/* Light glass overlay to keep text readable */}
       <div className="absolute inset-0 -z-10 pointer-events-none glass" />
       

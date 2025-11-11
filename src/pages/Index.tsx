@@ -21,6 +21,8 @@ import SSBTipsCarousel from "@/components/SSBTipsCarousel";
 import ScrollToTop from "@/components/ScrollToTop";
 import ScrollProgress from "@/components/ScrollProgress";
 import FounderMessage from "@/components/FounderMessage";
+import FloatingMenu from "@/components/FloatingMenu";
+import HelicopterAnimation from "@/components/HelicopterAnimation";
 
 
 const Index = () => {
@@ -39,8 +41,10 @@ const Index = () => {
 
   return (
     <main className="min-h-screen">
+      <HelicopterAnimation />
       <ScrollProgress />
       <ScrollToTop />
+      <FloatingMenu />
       <Navigation />
 
       {/* 🔊 Plays ~10s on each load; if autoplay is blocked, shows a tiny consent bar */}

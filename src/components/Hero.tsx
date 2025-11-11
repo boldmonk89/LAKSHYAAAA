@@ -9,121 +9,25 @@ import imaDehradun from "@/assets/ima-dehradun-3.jpg";
 import { useEffect, useRef, useState } from "react";
 
 const Hero = () => {
-  const audioRef = useRef<HTMLAudioElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const heroRef = useRef<HTMLDivElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [hasInteracted, setHasInteracted] = useState(false);
-  const fadeIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Carousel state
   const heroImages = [nda3, lakshya2, imaParade, forcesEmblem, youBelongHere, majMohit, imaDehradun];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Play audio on first user interaction
-  const playAudioOnInteraction = async () => {
-    if (audioRef.current && !isPlaying && !hasInteracted) {
-      setHasInteracted(true);
-      try {
-        await audioRef.current.play();
-        setIsPlaying(true);
-        
-        // Unmute video after user interaction
-        if (videoRef.current) {
-          videoRef.current.muted = false;
-          videoRef.current.volume = 0.5;
-        }
-        
-        // Stop audio after 15 seconds
-        setTimeout(() => {
-          if (audioRef.current) {
-            audioRef.current.pause();
-            audioRef.current.currentTime = 0;
-            setIsPlaying(false);
-          }
-        }, 15000);
-      } catch (error) {
-        console.log("Audio playback failed:", error);
-      }
-    }
-  };
 
   useEffect(() => {
-    // Scroll detection to adjust video volume when out of view
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (videoRef.current && hasInteracted) {
-          if (entry.isIntersecting) {
-            videoRef.current.muted = false;
-            videoRef.current.volume = 0.5;
-          } else {
-            videoRef.current.volume = 0;
-            videoRef.current.muted = true;
-          }
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    if (heroRef.current) {
-      observer.observe(heroRef.current);
-    }
-
-    // Create audio - prepare but don't play yet
-    audioRef.current = new Audio("/intro.mp3");
-    audioRef.current.loop = false;
-    audioRef.current.volume = 0.5;
-    audioRef.current.load();
-
-    // Set up one-time event listeners for user interaction
-    const handleFirstInteraction = () => {
-      playAudioOnInteraction();
-      // Remove listeners after first interaction
-      document.removeEventListener('click', handleFirstInteraction);
-      document.removeEventListener('keydown', handleFirstInteraction);
-      document.removeEventListener('touchstart', handleFirstInteraction);
-    };
-
-    document.addEventListener('click', handleFirstInteraction, { once: true });
-    document.addEventListener('keydown', handleFirstInteraction, { once: true });
-    document.addEventListener('touchstart', handleFirstInteraction, { once: true });
-
     // Image carousel - change every 5 seconds
     const carouselInterval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
     }, 5000);
 
-    // Handle scroll for video volume
-    const handleScroll = () => {
-      if (heroRef.current && videoRef.current && hasInteracted) {
-        const heroBottom = heroRef.current.getBoundingClientRect().bottom;
-        if (heroBottom <= 0) {
-          videoRef.current.volume = 0;
-        } else {
-          videoRef.current.volume = 0.5;
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
     // Cleanup
     return () => {
       clearInterval(carouselInterval);
-      window.removeEventListener('scroll', handleScroll);
-      document.removeEventListener('click', handleFirstInteraction);
-      document.removeEventListener('keydown', handleFirstInteraction);
-      document.removeEventListener('touchstart', handleFirstInteraction);
-      if (fadeIntervalRef.current) {
-        clearInterval(fadeIntervalRef.current);
-      }
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
-      observer.disconnect();
     };
-  }, [heroImages.length, hasInteracted]);
+  }, [heroImages.length]);
 
   return (
     <section ref={heroRef} id="hero" className="relative z-20 min-h-screen flex items-center overflow-hidden pt-16">
