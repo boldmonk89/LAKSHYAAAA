@@ -37,18 +37,22 @@ const DefenceForces: React.FC = () => {
   const { ref: cardsRef, isVisible: cardsVisible } = useScrollAnimation({ threshold: 0.2 });
 
   return (
-    <section id="defence-forces" className="relative isolate z-10 py-24 overflow-hidden">
-      <div className="container relative z-[1] mx-auto px-4">
+    // pulled up slightly (-mt-12) so it sits higher on page; overflow-visible so cards/shadows are not clipped
+    <section
+      id="defence-forces"
+      className="relative isolate z-20 -mt-12 py-20 overflow-visible"
+      aria-labelledby="defence-forces-heading"
+    >
+      <div className="container relative z-30 mx-auto px-4">
         {/* Title */}
         <div
           ref={titleRef}
-          className={`text-center mb-16 transform transition-all duration-700 ${
+          id="defence-forces-heading"
+          className={`text-center mb-12 transform transition-all duration-700 ${
             titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gradient glow">
-            Defence Forces Links
-          </h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-3 text-gradient glow">Defence Forces Links</h2>
           <p className="text-lg text-foreground/90 max-w-2xl mx-auto">
             Official portals to join the Indian Armed Forces
           </p>
@@ -60,7 +64,6 @@ const DefenceForces: React.FC = () => {
           className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto`}
         >
           {defenceLinks.map((force, index) => {
-            // stagger using transitionDelay (works with transition utilities)
             const delayMs = index * 100;
             return (
               <a
@@ -69,19 +72,24 @@ const DefenceForces: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Visit ${force.name} portal`}
-                className={`group relative glass-premium rounded-xl p-6 md:p-8 overflow-hidden transform transition-all duration-500
+                // Make sure the link/card is on top and clickable
+                className={`group relative z-30 pointer-events-auto rounded-xl p-6 md:p-8 overflow-visible transform transition-all duration-500
                   ${cardsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
-                  hover:scale-[1.03]`}
+                  hover:scale-[1.03] focus:outline-none focus:ring-4 focus:ring-primary/30`}
                 style={{ transitionDelay: `${delayMs}ms` }}
               >
                 {/* Insignia */}
                 <div className="flex justify-center mb-5">
-                  <div className="w-24 h-24 md:w-40 md:h-40 flex items-center justify-center p-3 rounded-full bg-white/8 group-hover:bg-white/18 transition-colors backdrop-blur-sm">
+                  <div
+                    className="w-24 h-24 md:w-36 md:h-36 flex items-center justify-center p-2 rounded-full
+                               bg-white/10 group-hover:bg-white/16 transition-colors
+                               backdrop-blur-sm" /* reduced blur */
+                  >
                     <img
                       src={force.insignia}
                       alt={`${force.name} Insignia`}
                       loading="lazy"
-                      className="w-full h-full object-contain filter drop-shadow-lg"
+                      className="w-full h-full object-contain filter drop-shadow-md"
                     />
                   </div>
                 </div>
@@ -109,7 +117,7 @@ const DefenceForces: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Hover effect border */}
+                {/* Hover effect border - pointer-events-none so it doesn't block clicks */}
                 <div className="absolute inset-0 rounded-xl pointer-events-none border-2 border-transparent group-hover:border-primary/80 transition-all duration-300" />
               </a>
             );
