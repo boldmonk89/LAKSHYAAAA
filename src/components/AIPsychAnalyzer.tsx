@@ -150,7 +150,7 @@ const AIPsychAnalyzer = () => {
       {/* Content */}
       <div className="relative z-20 max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-6xl font-bold text-gradient mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-3 text-gradient glow">
             AI Psych Analyzer
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
