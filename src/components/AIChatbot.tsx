@@ -169,7 +169,7 @@ const AIChatbot = () => {
   return (
     <section id="ai-chatbot" className="relative py-20 px-4 bg-gradient-to-b from-background to-secondary/20">
       <div className="relative z-20 container mx-auto max-w-4xl">
-        <Card className="border-2 border-primary/20 shadow-2xl">
+        <Card className="border-2 border-primary/20">
           <CardHeader className="bg-gradient-to-r from-primary/10 to-accent/10 border-b">
             <div className="flex items-center justify-between">
               <CardTitle className="flex items-center gap-3 text-2xl">
