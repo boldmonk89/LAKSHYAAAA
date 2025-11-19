@@ -72,7 +72,7 @@ const SSBTipsCarousel = () => {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-bold mb-3 text-gradient glow">
             Expert SSB Tips
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
