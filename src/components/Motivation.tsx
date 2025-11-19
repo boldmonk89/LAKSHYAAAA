@@ -49,7 +49,7 @@ const Motivation = () => {
             observer.observe(el);
           }
         }} className="text-center mb-16 scroll-fade-up">
-          <h2 className="text-4xl md:text-6xl font-bold text-gradient mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-3 text-gradient glow">
             Words That Inspire
           </h2>
         </div>
