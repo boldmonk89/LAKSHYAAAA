@@ -61,7 +61,7 @@ const Footer = () => {
 
         <div className="border-t border-primary/20 pt-8">
           <p className="text-center text-sm text-muted-foreground">
-            © 2025 SSB Preparation Hub. Made with dedication for aspiring officers.
+            © 2025 LAKSHYASSB. Made with dedication for aspiring officers.
           </p>
           <p className="text-center text-xs text-muted-foreground mt-2 italic">
             सेवा, सम्मान, साहस - Service, Honor, Courage
