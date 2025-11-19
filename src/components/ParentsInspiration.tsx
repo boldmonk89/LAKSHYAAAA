@@ -39,7 +39,7 @@ const ParentsInspiration = () => {
       {/* Content */}
       <div className="relative z-20 max-w-7xl mx-auto">
         <div ref={titleRef} className={`text-center mb-16 scroll-fade-up ${titleVisible ? 'visible' : ''}`}>
-          <h2 className="text-4xl md:text-6xl font-bold text-gradient mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold mb-3 text-gradient glow">
             They're Waiting For You
           </h2>
           <p className="text-2xl md:text-3xl text-foreground/90 font-semibold mb-4">
