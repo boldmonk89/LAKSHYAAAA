@@ -183,7 +183,7 @@ const SSBBoards = () => {
 
       <div className="relative z-20 max-w-7xl mx-auto">
         <div ref={titleRef} className={`text-center mb-16 scroll-fade-up ${titleVisible ? 'visible' : ''}`}>
-          <h2 className="text-4xl md:text-6xl font-bold text-gradient mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-3 text-gradient glow">
             SSB Board Locations
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
