@@ -76,7 +76,7 @@ const PiqAnalyzer = () => {
     <section id="piq-analyzer" className="relative py-20 px-4 bg-gradient-to-b from-secondary/20 to-background">
       <div className="relative z-20 container mx-auto max-w-4xl">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-bold mb-3 text-gradient glow">
             PIQ Analyzer
           </h2>
           <p className="text-lg text-muted-foreground">
