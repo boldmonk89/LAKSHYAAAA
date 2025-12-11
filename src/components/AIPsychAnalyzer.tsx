@@ -65,10 +65,22 @@ const AIPsychAnalyzer = () => {
     }
   };
 
+  const convertToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = error => reject(error);
+    });
+  };
+
   const handleAnalyze = async () => {
     const content = activeTest === 'tat' ? tatStory : activeTest === 'wat' ? watWord : srtSituation;
     
-    if (!content.trim() && !uploadedTATImage && !uploadedStoryImage) {
+    // For TAT with uploaded images, we don't need typed content
+    const hasUploadedImages = uploadedTATImage || uploadedStoryImage;
+    
+    if (!content.trim() && !hasUploadedImages) {
       toast({
         title: "Input Required",
         description: `Please write your ${activeTest.toUpperCase()} response or upload images.`,
@@ -77,7 +89,7 @@ const AIPsychAnalyzer = () => {
       return;
     }
 
-    // Word count validation
+    // Word count validation only for typed content
     if (content.trim()) {
       const wordCount = content.trim().split(/\s+/).length;
       if (wordCount > 500) {
@@ -94,12 +106,25 @@ const AIPsychAnalyzer = () => {
     setAnalysis(null);
 
     try {
-      const { data, error } = await supabase.functions.invoke('analyze-psych', {
-        body: { 
-          testType: activeTest,
-          content: content.trim(),
-          language: analyzeInHindi ? 'hindi' : 'english'
+      // Prepare request body
+      const requestBody: any = { 
+        testType: activeTest,
+        content: content.trim(),
+        language: analyzeInHindi ? 'hindi' : 'english'
+      };
+
+      // If TAT with uploaded images, convert to base64 and send
+      if (activeTest === 'tat' && hasUploadedImages) {
+        if (uploadedTATImage) {
+          requestBody.tatImage = await convertToBase64(uploadedTATImage);
         }
+        if (uploadedStoryImage) {
+          requestBody.storyImage = await convertToBase64(uploadedStoryImage);
+        }
+      }
+
+      const { data, error } = await supabase.functions.invoke('analyze-psych', {
+        body: requestBody
       });
 
       if (error) {
