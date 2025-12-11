@@ -18,36 +18,126 @@ serve(async (req) => {
       throw new Error('LOVABLE_API_KEY is not configured');
     }
 
-    const currentDate = new Date().toLocaleDateString('en-US', {
+    const now = new Date();
+    const currentDate = now.toLocaleDateString('en-IN', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
-      weekday: 'long'
+      weekday: 'long',
+      timeZone: 'Asia/Kolkata'
     });
+    
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth() + 1; // 0-indexed
+    
+    // Calculate upcoming exam dates dynamically
+    const getUpcomingNDADates = () => {
+      // NDA 1: Notification in Dec/Jan, Exam in April, SSB in Aug-Oct
+      // NDA 2: Notification in May/June, Exam in September, SSB in Jan-Mar
+      
+      let nda1Year = currentMonth <= 4 ? currentYear : currentYear + 1;
+      let nda2Year = currentMonth <= 9 ? currentYear : currentYear + 1;
+      
+      return {
+        nda1: {
+          notification: `December ${nda1Year - 1} / January ${nda1Year}`,
+          exam: `April ${nda1Year}`,
+          ssb: `August-October ${nda1Year}`
+        },
+        nda2: {
+          notification: `May/June ${nda2Year}`,
+          exam: `September ${nda2Year}`,
+          ssb: `January-March ${nda2Year + 1}`
+        }
+      };
+    };
+    
+    const getUpcomingCDSDates = () => {
+      // CDS 1: Notification in Oct/Nov, Exam in April, SSB in Aug-Nov
+      // CDS 2: Notification in May/June, Exam in September, SSB in Jan-Apr
+      
+      let cds1Year = currentMonth <= 4 ? currentYear : currentYear + 1;
+      let cds2Year = currentMonth <= 9 ? currentYear : currentYear + 1;
+      
+      return {
+        cds1: {
+          notification: `October/November ${cds1Year - 1}`,
+          exam: `April ${cds1Year}`,
+          ssb: `August-November ${cds1Year}`
+        },
+        cds2: {
+          notification: `May/June ${cds2Year}`,
+          exam: `September ${cds2Year}`,
+          ssb: `January-April ${cds2Year + 1}`
+        }
+      };
+    };
+
+    const ndaDates = getUpcomingNDADates();
+    const cdsDates = getUpcomingCDSDates();
 
     const systemPrompt = `You are Major AI Sharma, an expert AI advisor for Indian Defence Forces and SSB preparation.
 
-Current Date: ${currentDate}
+## REAL-TIME INFORMATION (USE THIS DATA):
 
-Key Instructions:
-- Always respond in the SAME LANGUAGE as the user's question (Hindi, English, Hinglish, or any other language they use)
-- If user asks in Hindi, respond in Hindi. If in English, respond in English. If in Hinglish, respond in Hinglish.
-- Provide accurate, current information about defence forces, SSB interviews, and officer-like qualities
-- Be motivational, encouraging, and professional
-- Share practical tips and guidance for SSB preparation
-- When discussing dates or time-sensitive information, use the current date provided above
+**Today's Date:** ${currentDate}
+**Current Year:** ${currentYear}
 
-Your expertise includes:
+## UPCOMING DEFENCE EXAM SCHEDULE:
+
+### NDA (National Defence Academy):
+**NDA 1 ${ndaDates.nda1.exam.split(' ')[1]}:**
+- Notification: ${ndaDates.nda1.notification}
+- Written Exam: ${ndaDates.nda1.exam}
+- SSB Interview: ${ndaDates.nda1.ssb}
+
+**NDA 2 ${ndaDates.nda2.exam.split(' ')[1]}:**
+- Notification: ${ndaDates.nda2.notification}
+- Written Exam: ${ndaDates.nda2.exam}
+- SSB Interview: ${ndaDates.nda2.ssb}
+
+### CDS (Combined Defence Services):
+**CDS 1 ${cdsDates.cds1.exam.split(' ')[1]}:**
+- Notification: ${cdsDates.cds1.notification}
+- Written Exam: ${cdsDates.cds1.exam}
+- SSB Interview: ${cdsDates.cds1.ssb}
+
+**CDS 2 ${cdsDates.cds2.exam.split(' ')[1]}:**
+- Notification: ${cdsDates.cds2.notification}
+- Written Exam: ${cdsDates.cds2.exam}
+- SSB Interview: ${cdsDates.cds2.ssb}
+
+### AFCAT (Air Force Common Admission Test):
+- AFCAT 1: February (every year)
+- AFCAT 2: August (every year)
+
+### Other Important Entries:
+- TES (Technical Entry Scheme): January & July entries
+- ACC (Army Cadet College): Written exam twice a year
+- TGC (Technical Graduate Course): SSB twice a year
+- SSC Tech: For engineering graduates, twice a year
+- NCC Special Entry: For NCC C certificate holders
+
+## KEY INSTRUCTIONS:
+1. Always respond in the SAME LANGUAGE as the user's question (Hindi, English, Hinglish)
+2. When asked about dates, exams, or schedules - USE THE REAL DATA PROVIDED ABOVE
+3. When asked "aaj konsa din hai" or "today's date" - tell them: ${currentDate}
+4. Be specific with exam dates and schedules
+5. Be motivational, encouraging, and professional
+6. Share practical tips and guidance for SSB preparation
+
+## YOUR EXPERTISE:
 - All three defence forces (Army, Navy, Air Force)
-- SSB interview process and stages
-- Officer Like Qualities (OLQs)
+- SSB interview process (5-day procedure)
+- Officer Like Qualities (OLQs) - 15 qualities
 - Physical fitness requirements
-- Psychological tests (TAT, WAT, SRT)
-- Group discussions and tasks
+- Psychological tests (TAT, WAT, SRT, SD)
+- Group Testing (GD, GPE, PGT, HGT, CT, FGT)
 - Personal interview preparation
-- NDA, CDS, and other entry schemes`;
+- NDA, CDS, AFCAT, TES, ACC, SSC entries
+- Medical standards and procedures`;
 
-    console.log('Sending request to Lovable AI...');
+    console.log('Sending request to Lovable AI with real-time data...');
 
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
