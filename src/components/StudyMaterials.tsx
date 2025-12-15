@@ -6,7 +6,7 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 
 const StudyMaterials = () => {
-  //const driveLink = "https://drive.google.com/drive/folders/1aCjXkJd8czDgnR75Fx6yUlNfuAnwbJO1?usp=sharing";
+  const driveLink = "";
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
   const { ref: card1Ref, isVisible: card1Visible } = useScrollAnimation({ threshold: 0.3 });
   const { ref: card2Ref, isVisible: card2Visible } = useScrollAnimation({ threshold: 0.3 });
@@ -82,7 +82,7 @@ const StudyMaterials = () => {
 
               <Button 
               className="w-full bg-primary hover:bg-primary-glow shadow-glow transition-all duration-300 hover:scale-105 group"
-              //onClick={() => window.open(driveLink, '_blank')}
+              onClick={() => window.open(driveLink, '_blank')}
             >
               <Download className="w-4 h-4 mr-2 animate-bounce group-hover:animate-none transition-all" />
               Access Google Drive
