@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Send, Bot, User, Mic, Volume2, VolumeX } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { invokeWithRetry } from "@/hooks/useRetryFetch";
 
 interface Message {
   role: "user" | "assistant";
@@ -140,17 +141,19 @@ const AIChatbot = () => {
     setIsLoading(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke("ai-chat", {
-        body: {
-          messages: [...messages, userMessage],
-        },
-      });
+      const { data, error } = await invokeWithRetry<{ response: string }>(
+        "ai-chat",
+        { messages: [...messages, userMessage] },
+        {
+          maxRetries: 3,
+          retryDelay: 3000,
+          onRetry: (attempt) => {
+            toast.info(`Backend waking up... Retry ${attempt}/3`);
+          }
+        }
+      );
 
       if (error) {
-        console.error("Edge function error:", error);
-        if (error.message?.includes('FunctionsFetchError') || error.message?.includes('Failed to fetch')) {
-          throw new Error('Backend is starting up. Please wait a moment and try again.');
-        }
         throw error;
       }
 
@@ -172,12 +175,10 @@ const AIChatbot = () => {
       console.error("Error:", error);
       const errorMessage = error?.message || "Failed to get response";
       
-      if (errorMessage.includes('starting up') || errorMessage.includes('fetch')) {
-        toast.error("Backend is waking up. Please try again in 10-15 seconds.");
-      } else if (errorMessage.includes('Rate limit')) {
+      if (errorMessage.includes('Rate limit')) {
         toast.error("Too many requests. Please wait a moment.");
       } else {
-        toast.error(errorMessage);
+        toast.error("Failed to get response. Please try again.");
       }
     } finally {
       setIsLoading(false);

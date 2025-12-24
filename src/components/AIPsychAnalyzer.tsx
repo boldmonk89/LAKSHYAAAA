@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Sparkles, Brain, Lightbulb, Target, Upload, RefreshCw } from "lucide-react";
 import { useState, useRef } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { invokeWithRetry } from "@/hooks/useRetryFetch";
 import backgroundImage from "@/assets/lakshya-background.jpg";
 import tat1 from "@/assets/tat-1.jpg";
 import tat2 from "@/assets/tat-2.jpg";
@@ -123,33 +123,28 @@ const AIPsychAnalyzer = () => {
         }
       }
 
-      const { data, error } = await supabase.functions.invoke('analyze-psych', {
-        body: requestBody
-      });
+      const { data, error } = await invokeWithRetry<{ analysis: PsychAnalysis }>(
+        'analyze-psych',
+        requestBody,
+        {
+          maxRetries: 3,
+          retryDelay: 3000,
+          onRetry: (attempt) => {
+            toast({
+              title: "Backend Waking Up",
+              description: `Retry ${attempt}/3... Please wait.`,
+            });
+          }
+        }
+      );
 
       if (error) {
         console.error("Error analyzing:", error);
-        const errorMessage = error.message || "Failed to analyze";
-        
-        if (errorMessage.includes('FunctionsFetchError') || errorMessage.includes('Failed to fetch')) {
-          toast({
-            title: "Backend Starting Up",
-            description: "Please wait 10-15 seconds and try again.",
-            variant: "destructive",
-          });
-        } else if (errorMessage.includes('Rate limit')) {
-          toast({
-            title: "Too Many Requests",
-            description: "Please wait a moment before trying again.",
-            variant: "destructive",
-          });
-        } else {
-          toast({
-            title: "Analysis Failed",
-            description: errorMessage,
-            variant: "destructive",
-          });
-        }
+        toast({
+          title: "Analysis Failed",
+          description: error.message || "Failed to analyze. Please try again.",
+          variant: "destructive",
+        });
         return;
       }
 
@@ -162,21 +157,11 @@ const AIPsychAnalyzer = () => {
       }
     } catch (error: any) {
       console.error("Error:", error);
-      const errorMessage = error?.message || "An unexpected error occurred";
-      
-      if (errorMessage.includes('starting up') || errorMessage.includes('fetch')) {
-        toast({
-          title: "Backend Starting Up",
-          description: "Please wait 10-15 seconds and try again.",
-          variant: "destructive",
-        });
-      } else {
-        toast({
-          title: "Error",
-          description: errorMessage,
-          variant: "destructive",
-        });
-      }
+      toast({
+        title: "Error",
+        description: error?.message || "An unexpected error occurred. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setIsAnalyzing(false);
     }
