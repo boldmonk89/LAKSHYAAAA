@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Upload, Lightbulb, Loader2 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { invokeWithRetry } from "@/hooks/useRetryFetch";
 
 const PiqAnalyzer = () => {
   const [piqDescription, setPiqDescription] = useState("");
@@ -52,19 +52,23 @@ const PiqAnalyzer = () => {
         });
       }
 
-      const { data, error } = await supabase.functions.invoke('analyze-piq', {
-        body: {
+      const { data, error } = await invokeWithRetry<{ analysis: any }>(
+        'analyze-piq',
+        {
           description: piqDescription,
           image: imageData,
           pdf: pdfData
+        },
+        {
+          maxRetries: 3,
+          retryDelay: 3000,
+          onRetry: (attempt) => {
+            toast.info(`Backend waking up... Retry ${attempt}/3`);
+          }
         }
-      });
+      );
 
       if (error) {
-        console.error("Edge function error:", error);
-        if (error.message?.includes('FunctionsFetchError') || error.message?.includes('Failed to fetch')) {
-          throw new Error('Backend is starting up. Please wait a moment and try again.');
-        }
         throw error;
       }
 
@@ -76,15 +80,7 @@ const PiqAnalyzer = () => {
       toast.success("PIQ analysis complete!");
     } catch (error: any) {
       console.error('Error:', error);
-      const errorMessage = error?.message || "Analysis failed";
-      
-      if (errorMessage.includes('starting up') || errorMessage.includes('fetch')) {
-        toast.error("Backend is waking up. Please try again in 10-15 seconds.");
-      } else if (errorMessage.includes('Rate limit')) {
-        toast.error("Too many requests. Please wait a moment.");
-      } else {
-        toast.error(errorMessage);
-      }
+      toast.error(error?.message || "Analysis failed. Please try again.");
     } finally {
       setIsAnalyzing(false);
     }
