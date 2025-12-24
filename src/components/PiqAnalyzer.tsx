@@ -60,13 +60,31 @@ const PiqAnalyzer = () => {
         }
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Edge function error:", error);
+        if (error.message?.includes('FunctionsFetchError') || error.message?.includes('Failed to fetch')) {
+          throw new Error('Backend is starting up. Please wait a moment and try again.');
+        }
+        throw error;
+      }
+
+      if (!data || !data.analysis) {
+        throw new Error('Empty response from AI');
+      }
 
       setAnalysis(data.analysis);
       toast.success("PIQ analysis complete!");
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error:', error);
-      toast.error("Analysis failed. Please try again.");
+      const errorMessage = error?.message || "Analysis failed";
+      
+      if (errorMessage.includes('starting up') || errorMessage.includes('fetch')) {
+        toast.error("Backend is waking up. Please try again in 10-15 seconds.");
+      } else if (errorMessage.includes('Rate limit')) {
+        toast.error("Too many requests. Please wait a moment.");
+      } else {
+        toast.error(errorMessage);
+      }
     } finally {
       setIsAnalyzing(false);
     }

@@ -146,7 +146,17 @@ const AIChatbot = () => {
         },
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Edge function error:", error);
+        if (error.message?.includes('FunctionsFetchError') || error.message?.includes('Failed to fetch')) {
+          throw new Error('Backend is starting up. Please wait a moment and try again.');
+        }
+        throw error;
+      }
+
+      if (!data || !data.response) {
+        throw new Error('Empty response from AI');
+      }
 
       const assistantMessage: Message = {
         role: "assistant",
@@ -158,9 +168,17 @@ const AIChatbot = () => {
       if (autoSpeak) {
         await speakText(data.response);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error:", error);
-      toast.error("Failed to get response. Please try again.");
+      const errorMessage = error?.message || "Failed to get response";
+      
+      if (errorMessage.includes('starting up') || errorMessage.includes('fetch')) {
+        toast.error("Backend is waking up. Please try again in 10-15 seconds.");
+      } else if (errorMessage.includes('Rate limit')) {
+        toast.error("Too many requests. Please wait a moment.");
+      } else {
+        toast.error(errorMessage);
+      }
     } finally {
       setIsLoading(false);
     }
