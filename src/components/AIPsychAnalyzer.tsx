@@ -129,11 +129,27 @@ const AIPsychAnalyzer = () => {
 
       if (error) {
         console.error("Error analyzing:", error);
-        toast({
-          title: "Analysis Failed",
-          description: error.message || "Failed to analyze. Please try again.",
-          variant: "destructive",
-        });
+        const errorMessage = error.message || "Failed to analyze";
+        
+        if (errorMessage.includes('FunctionsFetchError') || errorMessage.includes('Failed to fetch')) {
+          toast({
+            title: "Backend Starting Up",
+            description: "Please wait 10-15 seconds and try again.",
+            variant: "destructive",
+          });
+        } else if (errorMessage.includes('Rate limit')) {
+          toast({
+            title: "Too Many Requests",
+            description: "Please wait a moment before trying again.",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Analysis Failed",
+            description: errorMessage,
+            variant: "destructive",
+          });
+        }
         return;
       }
 
@@ -144,13 +160,23 @@ const AIPsychAnalyzer = () => {
           description: "Your response has been analyzed based on SSB OLQs.",
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error:", error);
-      toast({
-        title: "Error",
-        description: "An unexpected error occurred. Please try again.",
-        variant: "destructive",
-      });
+      const errorMessage = error?.message || "An unexpected error occurred";
+      
+      if (errorMessage.includes('starting up') || errorMessage.includes('fetch')) {
+        toast({
+          title: "Backend Starting Up",
+          description: "Please wait 10-15 seconds and try again.",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: errorMessage,
+          variant: "destructive",
+        });
+      }
     } finally {
       setIsAnalyzing(false);
     }
