@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Send, Bot, User, Mic, Volume2, VolumeX } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { invokeWithRetry } from "@/hooks/useRetryFetch";
 
@@ -49,32 +48,42 @@ const AIChatbot = () => {
         currentAudioRef.current = null;
       }
 
-      const { data, error } = await supabase.functions.invoke("text-to-speech", {
-        body: { text, voice: "nova" },
-      });
+      const { data, error } = await invokeWithRetry<{ audioContent: string }>(
+        "text-to-speech",
+        { text, voice: "nova" },
+        {
+          maxRetries: 3,
+          retryDelay: 2000,
+          onRetry: (attempt) => {
+            toast.info(`Voice service waking up... Retry ${attempt}/3`);
+          }
+        }
+      );
 
       if (error) throw error;
+      if (!data?.audioContent) throw new Error('No audio content received');
 
-      const audioBlob = new Blob(
-        [Uint8Array.from(atob(data.audioContent), c => c.charCodeAt(0))],
-        { type: 'audio/mp3' }
-      );
-      
-      const audioUrl = URL.createObjectURL(audioBlob);
+      // Use data URI for base64 audio - browser handles decoding natively
+      const audioUrl = `data:audio/mpeg;base64,${data.audioContent}`;
       const audio = new Audio(audioUrl);
       currentAudioRef.current = audio;
       
       audio.onended = () => {
         setIsSpeaking(false);
-        URL.revokeObjectURL(audioUrl);
         currentAudioRef.current = null;
+      };
+      
+      audio.onerror = () => {
+        setIsSpeaking(false);
+        currentAudioRef.current = null;
+        toast.error("Audio playback failed");
       };
       
       await audio.play();
     } catch (error) {
       console.error("Error speaking text:", error);
       setIsSpeaking(false);
-      toast.error("Failed to speak response");
+      toast.error("Voice service unavailable. Try again.");
     }
   };
 
@@ -97,17 +106,27 @@ const AIChatbot = () => {
           const base64Audio = (reader.result as string).split(',')[1];
           
           try {
-            const { data, error } = await supabase.functions.invoke("voice-to-text", {
-              body: { audio: base64Audio },
-            });
+            toast.info("Transcribing audio...");
+            const { data, error } = await invokeWithRetry<{ text: string }>(
+              "voice-to-text",
+              { audio: base64Audio },
+              {
+                maxRetries: 3,
+                retryDelay: 2000,
+                onRetry: (attempt) => {
+                  toast.info(`Voice service waking up... Retry ${attempt}/3`);
+                }
+              }
+            );
 
             if (error) throw error;
+            if (!data?.text) throw new Error('No transcription received');
             
             setInput(data.text);
             toast.success("Voice recorded successfully!");
           } catch (error) {
             console.error("Error transcribing audio:", error);
-            toast.error("Failed to transcribe audio");
+            toast.error("Failed to transcribe audio. Try again.");
           }
         };
         
@@ -120,7 +139,7 @@ const AIChatbot = () => {
       toast.success("Recording started...");
     } catch (error) {
       console.error("Error accessing microphone:", error);
-      toast.error("Failed to access microphone");
+      toast.error("Microphone access denied");
     }
   };
 
