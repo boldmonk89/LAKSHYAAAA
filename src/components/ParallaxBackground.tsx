@@ -44,6 +44,13 @@ const ParallaxBackground = () => {
           }}
         />
       ))}
+      {/* Consistent dark overlay for readability */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          background: 'linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.7) 100%)',
+        }}
+      />
     </div>
   );
 };
