@@ -77,13 +77,23 @@ All colors MUST be HSL.
 
   body {
     @apply text-foreground antialiased;
-   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background: transparent;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: hsl(var(--background));
     position: relative;
     min-height: 100vh;
   }
 
-  /* Remove old background styles since we're using ParallaxBackground component */
+  /* Ensure main content is above background */
+  main {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Consistent section styling */
+  section {
+    position: relative;
+    z-index: 1;
+  }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold tracking-tight;
@@ -91,7 +101,7 @@ All colors MUST be HSL.
   }
   
   /* Enhanced text visibility */
-  p, span, div {
+  p, span {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
   }
 }
