@@ -4,12 +4,12 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
+import Home from "./pages/Home";
+import AITools from "./pages/AITools";
+import Resources from "./pages/Resources";
 import NotFound from "./pages/NotFound";
 import ParallaxBackground from "./components/ParallaxBackground";
-
-// 👇 Import this new component
-import FloatingMenu from "@/components/FloatingMenu";
+import PageLayout from "./components/PageLayout";
 
 const queryClient = new QueryClient();
 
@@ -21,14 +21,12 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/" element={<PageLayout><Home /></PageLayout>} />
+          <Route path="/ai-tools" element={<PageLayout><AITools /></PageLayout>} />
+          <Route path="/resources" element={<PageLayout><Resources /></PageLayout>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
-
-      {/* 👇 Add your floating hamburger menu here */}
-      <FloatingMenu />
     </TooltipProvider>
   </QueryClientProvider>
 );
