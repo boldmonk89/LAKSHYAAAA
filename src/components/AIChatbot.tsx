@@ -55,19 +55,18 @@ const AIChatbot = () => {
 
       if (error) throw error;
 
-      // Use data URI - browser natively decodes base64 audio (no corruption)
-      const audioUrl = `data:audio/mpeg;base64,${data.audioContent}`;
+      const audioBlob = new Blob(
+        [Uint8Array.from(atob(data.audioContent), c => c.charCodeAt(0))],
+        { type: 'audio/mp3' }
+      );
+      
+      const audioUrl = URL.createObjectURL(audioBlob);
       const audio = new Audio(audioUrl);
       currentAudioRef.current = audio;
       
       audio.onended = () => {
         setIsSpeaking(false);
-        currentAudioRef.current = null;
-      };
-      
-      audio.onerror = () => {
-        console.error("Audio playback error");
-        setIsSpeaking(false);
+        URL.revokeObjectURL(audioUrl);
         currentAudioRef.current = null;
       };
       
@@ -75,7 +74,7 @@ const AIChatbot = () => {
     } catch (error) {
       console.error("Error speaking text:", error);
       setIsSpeaking(false);
-      toast.error("Voice feature temporarily unavailable");
+      toast.error("Failed to speak response");
     }
   };
 
