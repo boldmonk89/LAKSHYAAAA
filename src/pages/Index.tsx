@@ -9,6 +9,7 @@ import AIPsychAnalyzer from "@/components/AIPsychAnalyzer";
 import PiqAnalyzer from "@/components/PiqAnalyzer";
 import AIChatbot from "@/components/AIChatbot";
 import WhatsAppCommunity from "@/components/WhatsAppCommunity";
+import DailyNews from "@/components/DailyNews";
 import VideoResources from "@/components/VideoResources";
 import SSBBoards from "@/components/SSBBoards";
 import ParentsInspiration from "@/components/ParentsInspiration";
@@ -32,6 +33,7 @@ const Index = () => {
       <PiqAnalyzer />
       <AIChatbot />
       <WhatsAppCommunity />
+      <DailyNews />
       <DefenceForces />
       <Motivation />
       <VideoResources />
