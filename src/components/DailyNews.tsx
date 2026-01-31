@@ -88,12 +88,9 @@ const DailyNews = () => {
         >
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <Newspaper className="w-8 h-8 text-primary" />
-              <h2 className="text-3xl md:text-4xl font-bold text-gradient">
-                Daily News Headlines
-              </h2>
-            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gradient mb-4">
+              Daily News Headlines
+            </h2>
             <p className="text-muted-foreground text-lg mb-2">{today}</p>
             {lastUpdated && (
               <p className="text-sm text-muted-foreground">
