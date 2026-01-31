@@ -13,7 +13,7 @@ const WhatsAppCommunity = () => {
   const whatsappLink = "https://chat.whatsapp.com/GIb083g2BVq6npGVmrFHAE?mode=gi_t";
 
   return (
-    <section className="relative z-20 py-16 px-4 overflow-hidden bg-background">
+    <section className="relative z-20 py-16 px-4 overflow-hidden">
       <div className="max-w-4xl mx-auto">
         <div
           ref={ref}
