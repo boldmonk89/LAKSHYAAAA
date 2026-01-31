@@ -88,7 +88,7 @@ const DailyNews = () => {
         >
           {/* Header */}
           <div className="text-center mb-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-gradient mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold mb-3 text-gradient glow">
               Daily News Headlines
             </h2>
             <p className="text-muted-foreground text-lg mb-2">{today}</p>
