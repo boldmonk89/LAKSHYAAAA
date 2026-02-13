@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { supabase } from "@/integrations/supabase/client";
+import { invokeWithRetry } from "@/hooks/useRetryFetch";
 import { Newspaper, Globe, MapPin, ExternalLink, RefreshCw } from "lucide-react";
 
 interface NewsItem {
@@ -28,7 +28,10 @@ const DailyNews = () => {
     setError(null);
     
     try {
-      const { data, error: fetchError } = await supabase.functions.invoke('fetch-news');
+      const { data, error: fetchError } = await invokeWithRetry<any>('fetch-news', {}, {
+        maxRetries: 3,
+        retryDelay: 3000,
+      });
       
       if (fetchError) throw fetchError;
       
