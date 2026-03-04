@@ -19,6 +19,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import ScrollToTop from "@/components/ScrollToTop";
+import DefenceAnalysisPreview from "@/components/DefenceAnalysisPreview";
 
 const Index = () => {
   return (
@@ -27,6 +28,7 @@ const Index = () => {
       <ScrollToTop />
       <SiteIntroOnce ms={15000} tryAutoplayFirst />
       <Hero />
+      <DefenceAnalysisPreview />
       <WhatSSBDemands />
       <StudyMaterials />
       <AIPsychAnalyzer />

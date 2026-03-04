@@ -5,6 +5,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import DefenceAnalysis from "./pages/DefenceAnalysis";
+import ArticlePage from "./pages/ArticlePage";
+import ResearchPapers from "./pages/ResearchPapers";
 import ParallaxBackground from "./components/ParallaxBackground";
 
 const queryClient = new QueryClient();
@@ -18,6 +21,9 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/analysis" element={<DefenceAnalysis />} />
+          <Route path="/analysis/:slug" element={<ArticlePage />} />
+          <Route path="/research" element={<ResearchPapers />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
