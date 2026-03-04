@@ -11,7 +11,7 @@ const DefenceAnalysisPreview = () => {
   const featured = sampleArticles.find((a) => a.featured);
 
   return (
-    <section ref={ref} id="defence-analysis" className={`relative py-20 px-4 scroll-fade-up ${isVisible ? "visible" : ""}`}>
+    <section ref={ref} id="defence-analysis" className={`relative Z-10 py-20 px-4 scroll-fade-up ${isVisible ? "visible" : ""}`}>
       <div className="container mx-auto max-w-5xl">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-2 mb-4">
