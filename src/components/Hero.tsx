@@ -143,7 +143,7 @@ const Hero = () => {
             </video>
 
             {/* Overlay controls - appear when video is visible or when help is needed */}
-            <div className="<div className="absolute inset-0 bg-black/60 z-0"></div>">
+            <div className="absolute inset-0 z-20 flex items-end justify-center p-6 pointer-events-none">
               <div className="pointer-events-auto w-full max-w-md mx-auto flex items-center justify-between gap-3">
                 {/* If the video is on screen and we haven't had a user gesture, show a clear enable-sound CTA */}
                 {isVisible && !userInteracted && (
