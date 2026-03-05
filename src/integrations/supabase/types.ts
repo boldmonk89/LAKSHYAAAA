@@ -91,6 +91,42 @@ export type Database = {
           },
         ]
       }
+      research_papers: {
+        Row: {
+          author_name: string
+          created_at: string
+          file_path: string
+          id: string
+          summary: string | null
+          tags: string[] | null
+          title: string
+          user_id: string
+          year: number
+        }
+        Insert: {
+          author_name: string
+          created_at?: string
+          file_path: string
+          id?: string
+          summary?: string | null
+          tags?: string[] | null
+          title: string
+          user_id: string
+          year?: number
+        }
+        Update: {
+          author_name?: string
+          created_at?: string
+          file_path?: string
+          id?: string
+          summary?: string | null
+          tags?: string[] | null
+          title?: string
+          user_id?: string
+          year?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
