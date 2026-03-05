@@ -396,12 +396,12 @@ The Indo-Pacific is the primary theatre of great power competition. India must a
 export const sampleResearchPapers: ResearchPaper[] = [
   {
     id: "1",
-    title: "Strategic Importance of the Strait of Hormuz",
-    author: "Lakshya SSB",
+    title: "Global Economic and Geopolitical Impact of a Strait of Hormuz Blockade in an Iran–US–Israel Conflict",
+    author: "Tejas Raghav",
     year: 2026,
-    abstract: "A comprehensive research paper examining the strategic, economic, and military significance of the Strait of Hormuz in contemporary geopolitics, with special focus on implications for India's energy security.",
-    pdfUrl: "#",
-    tags: ["Maritime Strategy", "Energy Security"],
+    abstract: "The Strait of Hormuz remains the world's most consequential maritime energy corridor, channelling approximately 21 million barrels of oil per day—nearly one-fifth of global petroleum consumption. This paper examines the economic and geopolitical ramifications of a hypothetical blockade precipitated by an escalation of hostilities among Iran, the United States, and Israel. Our findings indicate that even a one-week closure could push Brent crude above USD 130 per barrel, while a sustained three-month blockade risks triggering a global recession, with Asian economies bearing disproportionate burden.",
+    pdfUrl: "/papers/strait-of-hormuz-research.docx",
+    tags: ["Maritime Strategy", "Energy Security", "Geopolitics", "Oil Markets"],
   },
   {
     id: "2",

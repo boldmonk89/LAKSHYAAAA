@@ -20,3 +20,6 @@ verify_jwt = false
 
 [functions.fetch-news]
 verify_jwt = false
+
+[functions.summarize-paper]
+verify_jwt = false
