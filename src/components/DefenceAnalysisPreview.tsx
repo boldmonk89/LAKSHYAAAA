@@ -6,12 +6,11 @@ import { Clock, ArrowRight, Shield } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const DefenceAnalysisPreview = () => {
-  const { ref, isVisible } = useScrollAnimation();
   const latestArticles = sampleArticles.slice(0, 3);
   const featured = sampleArticles.find((a) => a.featured);
 
   return (
-    <section ref={ref} id="defence-analysis" className={`relative z-10 py-20 px-4 scroll-fade-up ${isVisible ? "visible" : ""}`}>
+    <section id="defence-analysis" className="relative z-10 py-20 px-4">
       <div className="container mx-auto max-w-5xl relative z-20">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-2 mb-4">
