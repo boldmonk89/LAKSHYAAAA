@@ -205,31 +205,31 @@ const SSBBoards = () => {
               
               <div className="space-y-4 text-xs">
                 <BoardSection 
-                  location="Allahabad"
+                  location="Allahabad (Prayagraj)"
                   boards={armyBoards[0].boards}
-                  address="Civil Lines, Allahabad, UP"
-                  stays={["Army Guest House, Railway Retiring Rooms"]}
+                  address="Selection Centre Central, Cantt Rd, Old Cantt, Prayagraj, UP 211001"
+                  stays={armyBoards[0].stays}
                 />
                 
                 <BoardSection 
                   location="Bhopal"
                   boards={armyBoards[1].boards}
-                  address="Bairagarh, Bhopal, MP"
-                  stays={["MP Tourism hotels, Budget hotels"]}
+                  address="Selection Centre South, Bairagarh, Bhopal, MP 462030"
+                  stays={armyBoards[1].stays}
                 />
                 
                 <BoardSection 
                   location="Bengaluru"
                   boards={armyBoards[2].boards}
-                  address="Koramangala, Bengaluru"
-                  stays={["Hotels in Majestic, YMCA"]}
+                  address="Selection Centre South, 1 Richmond Rd, Langford Town, Bengaluru, KA 560025"
+                  stays={armyBoards[2].stays}
                 />
                 
                 <BoardSection 
                   location="Jalandhar"
                   boards={armyBoards[3].boards}
-                  address="Cantt Area, Jalandhar"
-                  stays={["Guest houses in Fancy Bazar"]}
+                  address="Selection Centre North, Military Station, Cantt, Jalandhar, PB 144005"
+                  stays={armyBoards[3].stays}
                 />
               </div>
             </Card>
@@ -244,36 +244,36 @@ const SSBBoards = () => {
                 <BoardSection 
                   location="1 AFSB - Dehradun"
                   boards={[{ name: "1 AFSB", batch: "" }]}
-                  address="Clement Town, Dehradun"
-                  stays={["Hotels in Rajpur Road"]}
+                  address="Air Force Selection Board, Clement Town, Dehradun, UK 248002"
+                  stays={airForceBoards[4].stays}
                 />
                 
                 <BoardSection 
                   location="2 AFSB - Mysore"
                   boards={[{ name: "2 AFSB", batch: "" }]}
-                  address="Mysore, Karnataka"
-                  stays={["KSTDC hotels, Budget lodges"]}
+                  address="Air Force Selection Board, Nazarbad, Mysuru, KA 570010"
+                  stays={airForceBoards[3].stays}
                 />
                 
                 <BoardSection 
                   location="3 AFSB - Gandhinagar"
                   boards={[{ name: "3 AFSB", batch: "" }]}
-                  address="Gandhinagar, Gujarat"
-                  stays={["Hotels in Sector 16"]}
+                  address="Air Force Selection Board, Sector 7, Gandhinagar, Gujarat 382007"
+                  stays={airForceBoards[1].stays}
                 />
                 
                 <BoardSection 
                   location="4 AFSB - Varanasi"
                   boards={[{ name: "4 AFSB", batch: "" }]}
-                  address="Varanasi Cantt, UP"
-                  stays={["Hotels near Cantt area"]}
+                  address="Air Force Selection Board, BHU Campus, Varanasi, UP 221005"
+                  stays={airForceBoards[0].stays}
                 />
                 
                 <BoardSection 
                   location="5 AFSB - Guwahati"
                   boards={[{ name: "5 AFSB", batch: "" }]}
-                  address="Guwahati, Assam"
-                  stays={["Hotels in Paltan Bazar"]}
+                  address="Air Force Selection Board, Borjhar, Near Airport, Guwahati, Assam 781015"
+                  stays={airForceBoards[2].stays}
                 />
               </div>
             </Card>
@@ -286,38 +286,38 @@ const SSBBoards = () => {
               
               <div className="space-y-4 text-xs">
                 <BoardSection 
-                  location="NSB - Coimbatore"
+                  location="NSB - Coimbatore (INS Agrani)"
                   boards={[{ name: "NSB", batch: "" }]}
-                  address="Coimbatore, Tamil Nadu"
-                  stays={["Hotels near RS Puram, YWCA"]}
+                  address="INS Agrani, Naval Base, Vattamalaipalayam, Coimbatore, TN 641015"
+                  stays={navyBoards[0].stays}
                 />
                 
                 <BoardSection 
                   location="12 SSB - Bangalore"
                   boards={[{ name: "12 SSB", batch: "" }]}
-                  address="Bangalore, Karnataka"
-                  stays={["Hotels in Majestic, YMCA"]}
+                  address="Selection Centre South, 1 Richmond Rd, Langford Town, Bengaluru, KA 560025"
+                  stays={navyBoards[2].stays}
                 />
                 
                 <BoardSection 
                   location="33 SSB - Bhopal"
                   boards={[{ name: "33 SSB", batch: "" }]}
-                  address="Bhopal, MP"
-                  stays={["MP Tourism, Railway Rooms"]}
+                  address="Inside Selection Centre South Complex, Bairagarh, Bhopal, MP 462030"
+                  stays={navyBoards[1].stays}
                 />
                 
                 <BoardSection 
                   location="NSB - Kolkata"
                   boards={[{ name: "NSB", batch: "" }]}
-                  address="Kolkata, West Bengal"
-                  stays={["Hotels in Park Street"]}
+                  address="Naval Selection Board, Garden Reach, Kolkata, WB 700024"
+                  stays={navyBoards[4].stays}
                 />
                 
                 <BoardSection 
-                  location="NSB - Visakhapatnam"
+                  location="NSB - Visakhapatnam (INS Kalinga)"
                   boards={[{ name: "NSB", batch: "" }]}
-                  address="Visakhapatnam, AP"
-                  stays={["Hotels near Beach Road"]}
+                  address="INS Kalinga, Naval Base, Bheemunipatnam, Visakhapatnam, AP 531163"
+                  stays={navyBoards[3].stays}
                 />
               </div>
             </Card>
