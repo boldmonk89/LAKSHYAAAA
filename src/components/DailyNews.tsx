@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { invokeWithRetry } from "@/hooks/useRetryFetch";
-import { Newspaper, Globe, MapPin, ExternalLink, RefreshCw } from "lucide-react";
+import { Newspaper, Globe, MapPin, ExternalLink, RefreshCw, Play, Youtube } from "lucide-react";
 
 interface NewsItem {
   title: string;
@@ -15,26 +15,30 @@ interface NewsItem {
   category: 'national' | 'international';
 }
 
+interface YouTubeVideo {
+  title: string;
+  videoId: string;
+  thumbnail: string;
+  pubDate: string;
+  description: string;
+}
+
 const DailyNews = () => {
   const { ref, isVisible } = useScrollAnimation();
   const [news, setNews] = useState<NewsItem[]>([]);
+  const [videos, setVideos] = useState<YouTubeVideo[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<'all' | 'national' | 'international'>('all');
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const [activeTab, setActiveTab] = useState<'news' | 'videos'>('news');
 
   const fetchNews = async () => {
     setLoading(true);
     setError(null);
-    
     try {
-      const { data, error: fetchError } = await invokeWithRetry<any>('fetch-news', {}, {
-        maxRetries: 3,
-        retryDelay: 3000,
-      });
-      
+      const { data, error: fetchError } = await invokeWithRetry<any>('fetch-news', {}, { maxRetries: 3, retryDelay: 3000 });
       if (fetchError) throw fetchError;
-      
       if (data?.success && data?.news) {
         setNews(data.news);
         setLastUpdated(new Date());
@@ -49,50 +53,43 @@ const DailyNews = () => {
     }
   };
 
+  const fetchVideos = async () => {
+    try {
+      const { data, error: fetchError } = await invokeWithRetry<any>('fetch-youtube-videos', {}, { maxRetries: 2, retryDelay: 2000 });
+      if (!fetchError && data?.success && data?.videos) {
+        setVideos(data.videos);
+      }
+    } catch (err) {
+      console.error('Error fetching videos:', err);
+    }
+  };
+
   useEffect(() => {
     fetchNews();
-    
-    // Auto-refresh every hour
+    fetchVideos();
     const interval = setInterval(fetchNews, 60 * 60 * 1000);
     return () => clearInterval(interval);
   }, []);
 
-  const filteredNews = news.filter(item => 
-    filter === 'all' || item.category === filter
-  );
+  const filteredNews = news.filter(item => filter === 'all' || item.category === filter);
 
   const formatDate = (dateStr: string) => {
     try {
       const date = new Date(dateStr);
-      return date.toLocaleString('en-IN', {
-        day: 'numeric',
-        month: 'short',
-        hour: '2-digit',
-        minute: '2-digit',
-      });
-    } catch {
-      return '';
-    }
+      return date.toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+    } catch { return ''; }
   };
 
-  const today = new Date().toLocaleDateString('en-IN', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
+  const today = new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 
   return (
     <section className="relative z-20 py-16 px-4 overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        <div
-          ref={ref}
-          className={`scroll-fade-up ${isVisible ? "visible" : ""}`}
-        >
+        <div ref={ref} className={`scroll-fade-up ${isVisible ? "visible" : ""}`}>
           {/* Header */}
           <div className="text-center mb-8">
             <h2 className="text-4xl md:text-5xl font-bold mb-3 text-gradient glow">
-              Daily News Headlines
+              Daily News & Videos
             </h2>
             <p className="text-muted-foreground text-lg mb-2">{today}</p>
             {lastUpdated && (
@@ -102,98 +99,147 @@ const DailyNews = () => {
             )}
           </div>
 
-          {/* Filter Buttons */}
-          <div className="flex flex-wrap justify-center gap-3 mb-8">
+          {/* Tabs */}
+          <div className="flex justify-center gap-3 mb-6">
             <Button
-              variant={filter === 'all' ? 'default' : 'outline'}
-              onClick={() => setFilter('all')}
+              variant={activeTab === 'news' ? 'default' : 'outline'}
+              onClick={() => setActiveTab('news')}
               className="gap-2"
             >
-              <Newspaper className="w-4 h-4" />
-              All News
+              <Newspaper className="w-4 h-4" /> News Headlines
             </Button>
             <Button
-              variant={filter === 'national' ? 'default' : 'outline'}
-              onClick={() => setFilter('national')}
+              variant={activeTab === 'videos' ? 'default' : 'outline'}
+              onClick={() => setActiveTab('videos')}
               className="gap-2"
             >
-              <MapPin className="w-4 h-4" />
-              National
-            </Button>
-            <Button
-              variant={filter === 'international' ? 'default' : 'outline'}
-              onClick={() => setFilter('international')}
-              className="gap-2"
-            >
-              <Globe className="w-4 h-4" />
-              International
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={fetchNews}
-              disabled={loading}
-              className="gap-2"
-            >
-              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-              Refresh
+              <Youtube className="w-4 h-4" /> Video Updates
+              {videos.length > 0 && (
+                <Badge variant="secondary" className="ml-1 text-[10px]">{videos.length}</Badge>
+              )}
             </Button>
           </div>
 
-          {/* News Grid */}
-          {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {[...Array(6)].map((_, i) => (
-                <Card key={i} className="glass-premium p-4">
-                  <Skeleton className="h-4 w-20 mb-3" />
-                  <Skeleton className="h-5 w-full mb-2" />
-                  <Skeleton className="h-5 w-3/4 mb-3" />
-                  <Skeleton className="h-3 w-32" />
+          {activeTab === 'news' ? (
+            <>
+              {/* Filter Buttons */}
+              <div className="flex flex-wrap justify-center gap-3 mb-8">
+                <Button variant={filter === 'all' ? 'default' : 'outline'} onClick={() => setFilter('all')} className="gap-2">
+                  <Newspaper className="w-4 h-4" /> All News
+                </Button>
+                <Button variant={filter === 'national' ? 'default' : 'outline'} onClick={() => setFilter('national')} className="gap-2">
+                  <MapPin className="w-4 h-4" /> National
+                </Button>
+                <Button variant={filter === 'international' ? 'default' : 'outline'} onClick={() => setFilter('international')} className="gap-2">
+                  <Globe className="w-4 h-4" /> International
+                </Button>
+                <Button variant="ghost" onClick={fetchNews} disabled={loading} className="gap-2">
+                  <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} /> Refresh
+                </Button>
+              </div>
+
+              {/* News Grid */}
+              {loading ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {[...Array(6)].map((_, i) => (
+                    <Card key={i} className="glass-premium p-4">
+                      <Skeleton className="h-4 w-20 mb-3" />
+                      <Skeleton className="h-5 w-full mb-2" />
+                      <Skeleton className="h-5 w-3/4 mb-3" />
+                      <Skeleton className="h-3 w-32" />
+                    </Card>
+                  ))}
+                </div>
+              ) : error ? (
+                <Card className="glass-premium p-8 text-center">
+                  <p className="text-destructive mb-4">{error}</p>
+                  <Button onClick={fetchNews} variant="outline">Try Again</Button>
                 </Card>
-              ))}
-            </div>
-          ) : error ? (
-            <Card className="glass-premium p-8 text-center">
-              <p className="text-destructive mb-4">{error}</p>
-              <Button onClick={fetchNews} variant="outline">
-                Try Again
-              </Button>
-            </Card>
-          ) : filteredNews.length === 0 ? (
-            <Card className="glass-premium p-8 text-center">
-              <p className="text-muted-foreground">No news available for this category.</p>
-            </Card>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredNews.slice(0, 15).map((item, index) => (
-                <Card
-                  key={index}
-                  className="glass-premium p-4 group cursor-pointer hover:border-primary/50 transition-all duration-300"
-                  onClick={() => window.open(item.link, '_blank')}
-                >
-                  <div className="flex items-start justify-between gap-2 mb-3">
-                    <Badge 
-                      variant={item.category === 'national' ? 'default' : 'secondary'}
-                      className="text-xs"
+              ) : filteredNews.length === 0 ? (
+                <Card className="glass-premium p-8 text-center">
+                  <p className="text-muted-foreground">No news available for this category.</p>
+                </Card>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {filteredNews.slice(0, 15).map((item, index) => (
+                    <Card
+                      key={index}
+                      className="glass-premium p-4 group cursor-pointer hover:border-primary/50 transition-all duration-300"
+                      onClick={() => window.open(item.link, '_blank')}
                     >
-                      {item.category === 'national' ? (
-                        <><MapPin className="w-3 h-3 mr-1" /> National</>
-                      ) : (
-                        <><Globe className="w-3 h-3 mr-1" /> International</>
-                      )}
-                    </Badge>
-                    <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
-                  
-                  <h3 className="font-semibold text-foreground mb-3 line-clamp-3 group-hover:text-primary transition-colors">
-                    {item.title}
-                  </h3>
-                  
-                  <div className="flex items-center justify-between text-xs text-muted-foreground">
-                    <span className="font-medium">{item.source}</span>
-                    <span>{formatDate(item.pubDate)}</span>
-                  </div>
+                      <div className="flex items-start justify-between gap-2 mb-3">
+                        <Badge variant={item.category === 'national' ? 'default' : 'secondary'} className="text-xs">
+                          {item.category === 'national' ? (
+                            <><MapPin className="w-3 h-3 mr-1" /> National</>
+                          ) : (
+                            <><Globe className="w-3 h-3 mr-1" /> International</>
+                          )}
+                        </Badge>
+                        <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </div>
+                      <h3 className="font-semibold text-foreground mb-3 line-clamp-3 group-hover:text-primary transition-colors">
+                        {item.title}
+                      </h3>
+                      <div className="flex items-center justify-between text-xs text-muted-foreground">
+                        <span className="font-medium">{item.source}</span>
+                        <span>{formatDate(item.pubDate)}</span>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </>
+          ) : (
+            /* Videos Tab */
+            <div>
+              {videos.length === 0 ? (
+                <Card className="glass-premium p-8 text-center">
+                  <p className="text-muted-foreground">Loading videos...</p>
                 </Card>
-              ))}
+              ) : (
+                <>
+                  <div className="text-center mb-6">
+                    <a
+                      href="https://youtube.com/@career247official"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm text-primary hover:underline"
+                    >
+                      <Youtube className="w-4 h-4" /> Career247 Official Channel — Subscribe for updates
+                    </a>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {videos.map((video, index) => (
+                      <Card
+                        key={index}
+                        className="glass-premium overflow-hidden group cursor-pointer hover:border-primary/50 transition-all duration-300"
+                        onClick={() => window.open(`https://www.youtube.com/watch?v=${video.videoId}`, '_blank')}
+                      >
+                        <div className="relative aspect-video overflow-hidden">
+                          <img
+                            src={video.thumbnail}
+                            alt={video.title}
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                          />
+                          <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/60 transition-colors">
+                            <div className="w-12 h-12 rounded-full bg-destructive/90 flex items-center justify-center">
+                              <Play className="w-6 h-6 text-white ml-0.5" fill="white" />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="p-4">
+                          <h3 className="font-semibold text-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors text-sm">
+                            {video.title}
+                          </h3>
+                          <p className="text-xs text-muted-foreground">
+                            {formatDate(video.pubDate)}
+                          </p>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
           )}
         </div>

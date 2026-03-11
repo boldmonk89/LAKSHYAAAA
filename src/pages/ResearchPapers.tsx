@@ -31,6 +31,8 @@ const ResearchPapers = () => {
 
   useEffect(() => {
     fetchCommunityPapers();
+    // Trigger daily paper generation (idempotent - won't duplicate)
+    supabase.functions.invoke("generate-daily-paper", {}).catch(console.error);
   }, []);
 
   const fetchCommunityPapers = async () => {
