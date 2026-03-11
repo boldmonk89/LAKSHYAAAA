@@ -244,36 +244,36 @@ const SSBBoards = () => {
                 <BoardSection 
                   location="1 AFSB - Dehradun"
                   boards={[{ name: "1 AFSB", batch: "" }]}
-                  address="Clement Town, Dehradun"
-                  stays={["Hotels in Rajpur Road"]}
+                  address="Air Force Selection Board, Clement Town, Dehradun, UK 248002"
+                  stays={airForceBoards[4].stays}
                 />
                 
                 <BoardSection 
                   location="2 AFSB - Mysore"
                   boards={[{ name: "2 AFSB", batch: "" }]}
-                  address="Mysore, Karnataka"
-                  stays={["KSTDC hotels, Budget lodges"]}
+                  address="Air Force Selection Board, Nazarbad, Mysuru, KA 570010"
+                  stays={airForceBoards[3].stays}
                 />
                 
                 <BoardSection 
                   location="3 AFSB - Gandhinagar"
                   boards={[{ name: "3 AFSB", batch: "" }]}
-                  address="Gandhinagar, Gujarat"
-                  stays={["Hotels in Sector 16"]}
+                  address="Air Force Selection Board, Sector 7, Gandhinagar, Gujarat 382007"
+                  stays={airForceBoards[1].stays}
                 />
                 
                 <BoardSection 
                   location="4 AFSB - Varanasi"
                   boards={[{ name: "4 AFSB", batch: "" }]}
-                  address="Varanasi Cantt, UP"
-                  stays={["Hotels near Cantt area"]}
+                  address="Air Force Selection Board, BHU Campus, Varanasi, UP 221005"
+                  stays={airForceBoards[0].stays}
                 />
                 
                 <BoardSection 
                   location="5 AFSB - Guwahati"
                   boards={[{ name: "5 AFSB", batch: "" }]}
-                  address="Guwahati, Assam"
-                  stays={["Hotels in Paltan Bazar"]}
+                  address="Air Force Selection Board, Borjhar, Near Airport, Guwahati, Assam 781015"
+                  stays={airForceBoards[2].stays}
                 />
               </div>
             </Card>
