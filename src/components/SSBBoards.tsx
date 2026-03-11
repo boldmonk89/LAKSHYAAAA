@@ -205,31 +205,31 @@ const SSBBoards = () => {
               
               <div className="space-y-4 text-xs">
                 <BoardSection 
-                  location="Allahabad"
+                  location="Allahabad (Prayagraj)"
                   boards={armyBoards[0].boards}
-                  address="Civil Lines, Allahabad, UP"
-                  stays={["Army Guest House, Railway Retiring Rooms"]}
+                  address="Selection Centre Central, Cantt Rd, Old Cantt, Prayagraj, UP 211001"
+                  stays={armyBoards[0].stays}
                 />
                 
                 <BoardSection 
                   location="Bhopal"
                   boards={armyBoards[1].boards}
-                  address="Bairagarh, Bhopal, MP"
-                  stays={["MP Tourism hotels, Budget hotels"]}
+                  address="Selection Centre South, Bairagarh, Bhopal, MP 462030"
+                  stays={armyBoards[1].stays}
                 />
                 
                 <BoardSection 
                   location="Bengaluru"
                   boards={armyBoards[2].boards}
-                  address="Koramangala, Bengaluru"
-                  stays={["Hotels in Majestic, YMCA"]}
+                  address="Selection Centre South, 1 Richmond Rd, Langford Town, Bengaluru, KA 560025"
+                  stays={armyBoards[2].stays}
                 />
                 
                 <BoardSection 
                   location="Jalandhar"
                   boards={armyBoards[3].boards}
-                  address="Cantt Area, Jalandhar"
-                  stays={["Guest houses in Fancy Bazar"]}
+                  address="Selection Centre North, Military Station, Cantt, Jalandhar, PB 144005"
+                  stays={armyBoards[3].stays}
                 />
               </div>
             </Card>
