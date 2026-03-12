@@ -3,7 +3,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
-const CHANNEL_ID = "UCFB-f6vkjRuHyaLGFP7xfgg";
+const CHANNEL_ID = "UC7BlGXgaOjnKGphm_HCRxhA";
 const RSS_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
 
 interface YouTubeVideo {
